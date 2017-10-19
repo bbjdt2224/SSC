@@ -10,11 +10,15 @@ use Auth;
 
 class AdminController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
+
     public function index()
     {
-        if(Auth::user()->admin == 0){
-            return redirect('select');
-        }
+       
     	$usersInfo = array();
     	$counter = 0;
     	$allUsers = User::all()->where('admin', '=', '0');
@@ -27,18 +31,14 @@ class AdminController extends Controller
 
     public function hours($id)
     {
-        if(Auth::user()->admin == 0){
-            return redirect('select');
-        }
+       
     	$user = User::where('id', '=', $id)->first();
     	return view('changehours', compact('user'));
     }
 
     public function change()
     {
-        if(Auth::user()->admin == 0){
-            return redirect('select');
-        }
+       
     	User::where('id', '=', request('id'))->update(['hours' => request('hours')]);
 
     	$usersInfo = array();
@@ -53,9 +53,7 @@ class AdminController extends Controller
 
     public function viewUser($id)
     {
-        if(Auth::user()->admin == 0){
-            return redirect('select');
-        }
+       
     	$user = User::find($id);
     	$timesheet =  Timesheets::where('user', '=', $user->id)->orderBy('startdate', 'desc')->first();
 
@@ -64,18 +62,7 @@ class AdminController extends Controller
 
     public function remove($id)
     {
-        if(Auth::user()->admin == 0){
-            return redirect('select');
-        }
-    	$user = User::where('id', '=', $id)->first();
-    	PreviousUsers::create([
-    		'oldid' => $user->id,
-    		'name' => $user->name,
-            'email' => $user->email,
-            'password' => $user->password,
-            'fundcc' => $user->fundcc,
-            'jobcode' => $user->jobcode,
-    	]);
+       
 
     	User::where('id', '=', $id)->delete();
 
@@ -85,14 +72,19 @@ class AdminController extends Controller
 
     public function getRecords()
     {
-        if(Auth::user()->admin == 0){
-            return redirect('select');
-        }
+       
     	$users = array();
     	$records = Timesheets::all()->where('startdate', '=', request('date'));
     	foreach($records as $record){
     		$users[] = User::where('id', '=', $record->user)->first();
     	}
     	return view('records', compact('records', 'users'));
+    }
+
+    public function getPastUsers()
+    {
+        $past = User::onlyTrashed();
+
+        return view('pastusers', compact('past'));
     }
 }

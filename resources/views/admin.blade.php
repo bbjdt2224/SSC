@@ -2,6 +2,7 @@
 
 @section('content')
 	<div class="container">
+		<a href="prevusers" class="btn btn-primary">Past Employees</a>
 		<table class="table">
 			<thead>
 				<th>Name</th>

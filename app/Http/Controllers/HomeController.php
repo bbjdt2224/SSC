@@ -17,6 +17,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('user');
     }
 
     /**
@@ -26,9 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->admin == 1){
-            return redirect('admin');
-        }
+        
         $userInfo = Timesheets::where('user', '=', Auth::id())->orderBy('startdate', 'desc')->first();
         if($userInfo == null){
             $userInfo = Timesheets::orderBy('id', 'desc')->first();
@@ -38,9 +37,7 @@ class HomeController extends Controller
 
     public function getWeek($date)
     {   
-        if(Auth::user()->admin == 1){
-            return redirect('admin');
-        }
+        
         $userInfo = Timesheets::where('user', '=', Auth::id())->where('startdate', '=', $date)->first();
         if($userInfo == null){
             $userInfo = Timesheets::orderBy('id', 'desc')->first();
@@ -50,9 +47,7 @@ class HomeController extends Controller
 
     public function store()
     {
-        if(Auth::user()->admin == 1){
-            return redirect('admin');
-        }
+        
         $week1 = "";
         $week2 = "";
         $totals = request('week1total').",".request('week2total').",".request('total');
@@ -94,9 +89,7 @@ class HomeController extends Controller
 
     public function select()
     {
-        if(Auth::user()->admin == 1){
-            return redirect('admin');
-        }
+        
         $all = Timesheets::where('user', '=', Auth::id())->get();
 
         return view('select', compact('all'));
@@ -105,9 +98,7 @@ class HomeController extends Controller
 
     public function new()
     {
-        if(Auth::user()->admin == 1){
-            return redirect('admin');
-        }
+        
         $date = Carbon::parse('this monday')->subWeeks(2)->toDateString();
         $userInfo = Timesheets::where('user', '=', Auth::id())->first();
         $userInfo->startdate = $date;

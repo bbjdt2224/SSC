@@ -32,3 +32,5 @@ Route::get('/records', function(){
 });
 
 Route::post('/search', 'AdminController@getRecords');
+
+Route::get('/prevusers', 'AdminController@getPastUsers');

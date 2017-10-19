@@ -54,10 +54,10 @@
                                 <ul class="dropdown-menu" role="menu">
                                     @if(Auth::User()->admin == 1)
                                     <li>
-                                        <a href="records">Records</a>
+                                        <a href="/laravel/ssc/public/index.php/records">Records</a>
                                     </li>
                                     <li>
-                                        <a href="admin">Current</a>
+                                        <a href="/laravel/ssc/public/index.php/admin">Current</a>
                                     </li>
                                     @endif
                                     <li>

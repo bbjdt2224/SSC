@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->boolean('admin')->default('0');
             $table->integer('hours');
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
