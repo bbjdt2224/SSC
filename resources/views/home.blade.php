@@ -2,12 +2,14 @@
 
 @section('content')
 <div class="container">
+    <a href="../select" class='btn btn-danger'>Back</a>
     <form action='{{ action('HomeController@store') }}' method='POST'>
 
         {{ csrf_field()}}
 
         <div class="row">
             <div class="col-md-3">
+                <br/>
                 <input type='date' class="form-control" name="startdate" value="{{$userInfo->startdate}}">
             </div>
         </div>
@@ -87,8 +89,8 @@
                 </tr>
             </tbody>
         </table>
-        <a href="/home/update" class="btn btn-primary">Save</a>
-        <button type="submit" class="btn btn-success">Submit</button>
+        <input type="submit" class="btn btn-primary" name="save" value="Save">
+        <input type="submit" class="btn btn-success" name="submit" value="Submit">
     </form>
 </div>
 

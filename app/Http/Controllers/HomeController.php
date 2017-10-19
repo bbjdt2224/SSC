@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Timesheets;
 use Auth;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -25,7 +26,22 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if(Auth::user()->admin == 1){
+            return redirect('admin');
+        }
         $userInfo = Timesheets::where('user', '=', Auth::id())->orderBy('startdate', 'desc')->first();
+        if($userInfo == null){
+            $userInfo = Timesheets::orderBy('id', 'desc')->first();
+        }
+        return view('home', compact('userInfo'));
+    }
+
+    public function getWeek($date)
+    {   
+        if(Auth::user()->admin == 1){
+            return redirect('admin');
+        }
+        $userInfo = Timesheets::where('user', '=', Auth::id())->where('startdate', '=', $date)->first();
         if($userInfo == null){
             $userInfo = Timesheets::orderBy('id', 'desc')->first();
         }
@@ -34,6 +50,9 @@ class HomeController extends Controller
 
     public function store()
     {
+        if(Auth::user()->admin == 1){
+            return redirect('admin');
+        }
         $week1 = "";
         $week2 = "";
         $totals = request('week1total').",".request('week2total').",".request('total');
@@ -61,16 +80,39 @@ class HomeController extends Controller
             ]);
         }
         else{
-            $echo = Timesheets::where('user', '=', Auth::id())->where('startdate', '=', request('startdate'))->update(['firstweek' => $week1,'secondweek' => $week2, 'totals'=> $totals]);
+            Timesheets::where('user', '=', Auth::id())->where('startdate', '=', request('startdate'))->update(['firstweek' => $week1,'secondweek' => $week2, 'totals'=> $totals]);
+        }
+        if(request('save')){
+            return view('save');
+        }
+        else if(request('submit')){
+            Timesheets::where('user', '=', Auth::id())->where('startdate', '=', request('startdate'))->update(['submitted' => 1]);
+            return view('success');
         }
         
-        $userInfo = Timesheets::where('user', '=', Auth::id())->where('startdate', '=', request('startdate'))->first();
-        return view('home', compact('userInfo'));
     }
 
-    public function submit()
+    public function select()
     {
-        $this->store();
+        if(Auth::user()->admin == 1){
+            return redirect('admin');
+        }
+        $all = Timesheets::where('user', '=', Auth::id())->get();
 
+        return view('select', compact('all'));
+
+    }
+
+    public function new()
+    {
+        if(Auth::user()->admin == 1){
+            return redirect('admin');
+        }
+        $date = Carbon::parse('this monday')->subWeeks(2)->toDateString();
+        $userInfo = Timesheets::where('user', '=', Auth::id())->first();
+        $userInfo->startdate = $date;
+        
+
+        return view('home', compact('userInfo'));
     }
 }

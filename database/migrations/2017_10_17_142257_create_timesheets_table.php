@@ -23,6 +23,7 @@ class CreateTimesheetsTable extends Migration
             $table->string('firstweek')->default($defaultString);
             $table->string('secondweek')->default($defaultString);
             $table->string('totals')->default('0,0,0');
+            $table->boolean('submitted')->default('0');
             $table->timestamps();
         });
     }
