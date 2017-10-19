@@ -28,10 +28,10 @@
 							@endif
 						</td>
 						<td>
-							{{$user[1]->startdate}}
+							{{\Carbon\Carbon::parse($user[1]->startdate)->toFormattedDateString()}}
 						</td>
 						<td>
-
+							{{explode(',', $user[1]->totals)[2] - $user[0]->hours}}
 						</td>
 						<td>
 							<a href="admin/change/{{$user[0]->id}}" class="btn btn-primary">Change</a>

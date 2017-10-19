@@ -26,3 +26,9 @@ Route::post('/admin', 'AdminController@change');
 Route::get('/timesheet/{id}', 'AdminController@viewUser');
 
 Route::get('/remove/{id}', 'AdminController@remove');
+
+Route::get('/records', function(){
+	return view('search');
+});
+
+Route::post('/search', 'AdminController@getRecords');
