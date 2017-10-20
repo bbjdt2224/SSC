@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->text('fundcc');
             $table->text('jobcode');
             $table->boolean('admin')->default('0');
-            $table->integer('hours');
+            $table->integer('hours')->default('0');
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
