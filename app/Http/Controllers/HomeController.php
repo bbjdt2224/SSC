@@ -100,7 +100,7 @@ class HomeController extends Controller
     {
         
         $date = Carbon::parse('this monday')->subWeeks(2)->toDateString();
-        $userInfo = Timesheets::where('user', '=', Auth::id())->first();
+        $userInfo = Timesheets::where('user', '=', '-1')->first();
         $userInfo->startdate = $date;
         
 
