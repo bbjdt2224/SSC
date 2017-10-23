@@ -82,7 +82,7 @@ class HomeController extends Controller
         }
         else if(request('submit')){
             Timesheets::where('user', '=', Auth::id())->where('startdate', '=', request('startdate'))->update(['submitted' => 1]);
-            return view('success');
+            return view('sign');
         }
         
     }
