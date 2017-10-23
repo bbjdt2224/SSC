@@ -45,14 +45,7 @@ class AdminController extends Controller
        
     	User::where('id', '=', request('id'))->update(['hours' => request('hours')]);
 
-    	$usersInfo = array();
-    	$counter = 0;
-    	$allUsers = User::all()->where('admin', '=', '0');
-    	foreach($allUsers as $user){
-    		$usersInfo[] = array($allUsers[$counter], Timesheets::where('user', '=', $user->id)->orderBy('startdate', 'desc')->first());
-    		$counter ++;
-    	}
-    	return view('admin', compact('usersInfo'));
+    	return redirect('admin');
     }
 
     public function viewUser($id)
@@ -100,19 +93,6 @@ class AdminController extends Controller
     {
         User::withTrashed()->find($id)->restore();
 
-        $usersInfo = array();
-        $counter = 0;
-        $allUsers = User::all()->where('admin', '=', '0');
-        foreach($allUsers as $user){
-            if($timesheet = Timesheets::where('user', '=', $user->id)->orderBy('startdate', 'desc')->first()){
-                $usersInfo[] = array($allUsers[$user->id-1], $timesheet);
-            }
-            else{
-                $usersInfo[] = array($allUsers[$user->id-1], Timesheets::where('user', '=', '-1')->first());
-            }
-            
-            $counter ++;
-        }
-        return view('admin', compact('usersInfo'));
+        return redirect('admin');
     }
 }
