@@ -23,7 +23,13 @@ class AdminController extends Controller
     	$counter = 0;
     	$allUsers = User::all()->where('admin', '=', '0');
     	foreach($allUsers as $user){
-    		$usersInfo[] = array($allUsers[$counter], Timesheets::where('user', '=', $user->id)->orderBy('startdate', 'desc')->first());
+            if($timesheet = Timesheets::where('user', '=', $user->id)->orderBy('startdate', 'desc')->first()){
+                $usersInfo[] = array($allUsers[$user->id-1], $timesheet);
+            }
+            else{
+                $usersInfo[] = array($allUsers[$user->id-1], Timesheets::where('user', '=', '-1')->first());
+            }
+    		
     		$counter ++;
     	}
     	return view('admin', compact('usersInfo'));
@@ -55,7 +61,12 @@ class AdminController extends Controller
     {
        
     	$user = User::find($id);
-    	$timesheet =  Timesheets::where('user', '=', $user->id)->orderBy('startdate', 'desc')->first();
+        if($timesheet = Timesheets::where('user', '=', $user->id)->orderBy('startdate', 'desc')->first()){
+        }
+        else{
+            $timesheet = Timesheets::where('user', '=', '-1')->first();
+        }
+    	
 
     	return view('timesheet', compact('user', 'timesheet'));
     }

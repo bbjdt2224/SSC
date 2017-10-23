@@ -4,15 +4,18 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Student Success Center</title>
-
+    <script src="{{ asset('js/app.js') }}"></script>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    
 </head>
 <body>
     <div id="app">
@@ -54,12 +57,12 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     @if(Auth::User()->admin == 1)
-                                    <li>
-                                        <a href="/laravel/ssc/public/index.php/records">Records</a>
-                                    </li>
-                                    <li>
-                                        <a href="/laravel/ssc/public/index.php/admin">Current</a>
-                                    </li>
+                                        <li>
+                                            <a href="/laravel/ssc/public/index.php/records">Records</a>
+                                        </li>
+                                        <li>
+                                            <a href="/laravel/ssc/public/index.php/admin">Current</a>
+                                        </li>
                                     @endif
                                     <li>
                                         <a href="{{ route('logout') }}"
