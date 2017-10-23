@@ -10,7 +10,7 @@
 	          <input type="hidden" name="signature" id="signature-input">
 		</fieldset>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
-		<script src="../js/signature.js"></script>
+		<script src={{asset('js/signature.js')}}></script>
 		<script>signature();</script>
 	</div>
 	@endsection

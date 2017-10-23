@@ -2,7 +2,7 @@
 
 @section('content')
 	<div class="container">
-		<form method='POST' action='search'>
+		<form method='POST' action='{{route("search")}}'>
 			{{ csrf_field()}}
 			<input type='date' class='form-control' name='date'>
 			<br/>

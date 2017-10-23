@@ -94,8 +94,27 @@ class AdminController extends Controller
 
     public function getPastUsers()
     {
-        $past = User::onlyTrashed();
-
+        $past = User::onlyTrashed()->get();
         return view('pastusers', compact('past'));
+    }
+
+    public function restorePast($id)
+    {
+        User::withTrashed()->find($id)->restore();
+
+        $usersInfo = array();
+        $counter = 0;
+        $allUsers = User::all()->where('admin', '=', '0');
+        foreach($allUsers as $user){
+            if($timesheet = Timesheets::where('user', '=', $user->id)->orderBy('startdate', 'desc')->first()){
+                $usersInfo[] = array($allUsers[$user->id-1], $timesheet);
+            }
+            else{
+                $usersInfo[] = array($allUsers[$user->id-1], Timesheets::where('user', '=', '-1')->first());
+            }
+            
+            $counter ++;
+        }
+        return view('admin', compact('usersInfo'));
     }
 }

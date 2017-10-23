@@ -11,9 +11,9 @@
 			<tbody>
 				@foreach($past as $person)
 					<tr>
-						<td>$person->name</td>
-						<td>$person->deleted_at</td>
-						<td><a href="addUser/{{$person->id}}" class="btn btn-default">Un-Remove</a></td>
+						<td>{{$person->name}}</td>
+						<td>{{$person->deleted_at}}</td>
+						<td><a href="{{route('revive', ['id' => $person->id])}}" class="btn btn-warning">Un-Remove</a></td>
 					</tr>
 				@endforeach
 			</tbody>

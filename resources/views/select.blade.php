@@ -2,7 +2,7 @@
 
 @section('content')
 	<div class="container">
-		<a href="new" class="btn btn-primary">New Timesheet</a>
+		<a href="{{route('new')}}" class="btn btn-primary">New Timesheet</a>
 		<table class="table">
 			<caption><h2>Timesheets</h2></caption>
 			<thead>
@@ -12,7 +12,7 @@
 				@foreach($all as $timesheet)
 					<tr>
 						<td>
-							<a href="home/{{$timesheet->startdate}}" class='btn btn-default'>
+							<a href="{{route('home', ['date' => $timesheet->startdate])}}" class='btn btn-default'>
 								{{$timesheet->startdate}}
 							</a>
 							

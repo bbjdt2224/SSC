@@ -78,7 +78,7 @@
             @endif
 
             <div class="content">
-                <img src="step.png">
+                <img src="{{asset('step.png')}}">
             </div>
         </div>
     </body>

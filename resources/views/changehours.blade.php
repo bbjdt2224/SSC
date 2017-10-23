@@ -2,7 +2,7 @@
 
 @section('content')
 	<div class="container">
-		<form action="../../admin" method="post">
+		<form action="{{route('admin')}}" method="post">
 			{{ csrf_field()}}
 			<div class="form-goup">
 				<input type="number" name="hours" class="form-control" value="{{$user->hours}}">

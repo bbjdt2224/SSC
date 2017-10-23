@@ -2,7 +2,7 @@
 
 @section('content')
 	<div class="container">
-		<a href="prevusers" class="btn btn-primary">Past Employees</a>
+		<a href="{{route('prevusers')}}" class="btn btn-primary">Past Employees</a>
 		<table class="table">
 			<thead>
 				<th>Name</th>
@@ -16,7 +16,7 @@
 				@foreach($usersInfo as $user)
 					<tr>
 						<td>
-							<a href="timesheet/{{$user[0]->id}}">
+							<a href='{{route('timesheet', ['id' => $user[0]->id])}}'>
 								{{$user[0]->name}}
 							</a>
 							
@@ -35,10 +35,10 @@
 							{{explode(',', $user[1]->totals)[2] - $user[0]->hours}}
 						</td>
 						<td>
-							<a href="admin/change/{{$user[0]->id}}" class="btn btn-primary">Change</a>
+							<a href='{{route('change', ['id' => $user[0]->id])}}' class="btn btn-primary">Change</a>
 						</td>
 						<td>
-							<a href="remove/{{$user[0]->id}}" class='btn btn-danger'>Remove</button>
+							<a href='{{route('remove', ['id' => $user[0]->id])}}' class='btn btn-danger'>Remove</button>
 						</td>
 					</tr>
 				@endforeach

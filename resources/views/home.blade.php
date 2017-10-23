@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <a href="../select" class='btn btn-danger'>Back</a>
+    <a href="{{ route('select') }}" class='btn btn-danger'>Back</a>
     <form action='{{ action('HomeController@store') }}' method='POST'>
 
         {{ csrf_field()}}
@@ -94,5 +94,5 @@
     </form>
 </div>
 
-<script src="../js/totals.js"></script>
+<script src={{asset('js/totals.js')}}></script>
 @endsection
