@@ -22,13 +22,8 @@ class AdminController extends Controller
     	$usersInfo = array();
     	$allUsers = User::all()->where('admin', '=', '0');
     	foreach($allUsers as $user){
-            if($timesheet = Timesheets::where('user', '=', $user->id)->orderBy('startdate', 'desc')->first()){
-                $usersInfo[] = array($user, $timesheet);
-            }
-            else{
-                $usersInfo[] = array($user, Timesheets::where('user', '=', '-1')->first());
-            }
-    		
+            $timesheet = Timesheets::where('user', '=', $user->id)->orderBy('startdate', 'desc')->first();
+            $usersInfo[] = array($user, $timesheet);
     	}
     	return view('admin', compact('usersInfo'));
     }
@@ -36,7 +31,7 @@ class AdminController extends Controller
     public function hours($id)
     {
        
-    	$user = User::where('id', '=', $id)->first();
+    	$user = User::find($id);
     	return view('changehours', compact('user'));
     }
 
@@ -55,11 +50,8 @@ class AdminController extends Controller
     {
        
     	$user = User::find($id);
-        if($timesheet = Timesheets::where('user', '=', $user->id)->orderBy('startdate', 'desc')->first()){
-        }
-        else{
-            $timesheet = Timesheets::where('user', '=', '-1')->first();
-        }
+        $timesheet = Timesheets::where('user', '=', $user->id)->orderBy('startdate', 'desc')->first();
+
     	
 
     	return view('timesheet', compact('user', 'timesheet'));
@@ -97,5 +89,10 @@ class AdminController extends Controller
         User::withTrashed()->find($id)->restore();
 
         return redirect('admin');
+    }
+
+    public function allowEdit($id, $date){
+        Timesheets::where('user', '=', $id)->where('startdate', '=', $date)->update(['submitted' => 0]);
+        return redirect(route('admin'));
     }
 }

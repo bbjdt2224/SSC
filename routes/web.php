@@ -38,3 +38,5 @@ Route::get('/prevusers', 'AdminController@getPastUsers')->name('prevusers');
 Route::get('/restore/{id}', 'AdminController@restorePast')->name('revive');
 
 Route::post('/signature', 'HomeController@saveSignature')->name('signature');
+
+Route::get('/allowEdit/{id}/{date}', 'AdminController@allowEdit')->name('allowEdit');
