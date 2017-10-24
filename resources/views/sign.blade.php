@@ -8,7 +8,7 @@
 		          <legend><h4>Signature</h4></legend>
 		          <div class="signature-wrapper"><canvas id="signature" class="signature-pad" width="600px" height="150px"></canvas></div>
 				  <input type="hidden" name="signature" id="signature-input">
-		          <input type="hidden" name="date" value="{{$startdate}}">
+		          <input type="hidden" name="date" value="{{$date}}">
 		          <button id="submit" class="button tiny alert">Submit</button>
 		          <button id="clear-signature" class="button tiny alert">Clear</button>
 		          
