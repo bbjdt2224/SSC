@@ -36,3 +36,5 @@ Route::post('/search', 'AdminController@getRecords')->name('search');
 Route::get('/prevusers', 'AdminController@getPastUsers')->name('prevusers');
 
 Route::get('/restore/{id}', 'AdminController@restorePast')->name('revive');
+
+Route::post('/signature', 'HomeController@saveSignature')->name('signature');

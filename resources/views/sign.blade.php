@@ -2,13 +2,18 @@
 
 @section('content')
 	<div class="container">
-		<fieldset>
-	          <legend><h4>Signature</h4></legend>
-	          <div class="signature-wrapper"><canvas id="signature" class="signature-pad" width="600px" height="150px"></canvas></div>
-	          <button id="submit" class="button tiny alert">Submit</button>
-	          <button id="clear-signature" class="button tiny alert">Clear</button>
-	          <input type="hidden" name="signature" id="signature-input">
-		</fieldset>
+		<form action="{{route('signature')}}" method="post">
+			{{ csrf_field()}}
+			<fieldset>
+		          <legend><h4>Signature</h4></legend>
+		          <div class="signature-wrapper"><canvas id="signature" class="signature-pad" width="600px" height="150px"></canvas></div>
+				  <input type="hidden" name="signature" id="signature-input">
+		          <input type="hidden" name="date" value="{{$startdate}}">
+		          <button id="submit" class="button tiny alert">Submit</button>
+		          <button id="clear-signature" class="button tiny alert">Clear</button>
+		          
+			</fieldset>
+		</form>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
 		<script src={{asset('js/signature.js')}}></script>
 		<script>signature();</script>

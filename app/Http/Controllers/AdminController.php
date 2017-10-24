@@ -42,8 +42,11 @@ class AdminController extends Controller
 
     public function change()
     {
-       
-    	User::where('id', '=', request('id'))->update(['hours' => request('hours')]);
+        $hours = 0;
+        if(request('hours') > 0){
+            $hours = request('hours');
+        }
+    	User::where('id', '=', request('id'))->update(['hours' => $hours]);
 
     	return redirect('admin');
     }
@@ -66,7 +69,7 @@ class AdminController extends Controller
     {
        
 
-    	User::where('id', '=', $id)->delete();
+    	User::find($id)->delete();
 
     	return back();
 

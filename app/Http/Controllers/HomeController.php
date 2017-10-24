@@ -47,7 +47,11 @@ class HomeController extends Controller
 
     public function store()
     {
-        
+        $date = date('W', strtotime(request('startdate')));
+        if($date%2 != 1){
+            $date = $date -1;
+        }
+        $date = date('Y-m-d', strtotime(date('Y')."W".$date."1"));
         $week1 = "";
         $week2 = "";
         $totals = request('week1total').",".request('week2total').",".request('total');
@@ -63,26 +67,14 @@ class HomeController extends Controller
                 $week2 .= "|";
             }
         }
-        $existing = Timesheets::where('user', '=', Auth::id())->where('startdate', '=', request('startdate'))->count();
-       // dd($existing);
-        if($existing == 0){
-            Timesheets::create([
-                'user' => Auth::id(),
-                'startdate' => request('startdate'),
-                'firstweek' => $week1,
-                'secondweek' => $week2,
-                'totals' => $totals,
-            ]);
-        }
-        else{
-            Timesheets::where('user', '=', Auth::id())->where('startdate', '=', request('startdate'))->update(['firstweek' => $week1,'secondweek' => $week2, 'totals'=> $totals]);
-        }
+        Timesheets::where('user', '=', Auth::id())->where('id', '=', request('id'))->update(['firstweek' => $week1,'secondweek' => $week2, 'totals'=> $totals, 'startdate' => $date]);
+
         if(request('save')){
             return view('save');
         }
         else if(request('submit')){
-            Timesheets::where('user', '=', Auth::id())->where('startdate', '=', request('startdate'))->update(['submitted' => 1]);
-            return view('sign');
+            Timesheets::where('user', '=', Auth::id())->where('id', '=', request('id'))->update(['submitted' => 1]);
+            return view('sign', compact('startdate'));
         }
         
     }
@@ -99,11 +91,25 @@ class HomeController extends Controller
     public function new()
     {
         
-        $date = Carbon::parse('this monday')->subWeeks(2)->toDateString();
-        $userInfo = Timesheets::where('user', '=', '-1')->first();
-        $userInfo->startdate = $date;
-        
+        $date = date('W', time());
+        if($date%2 != 1){
+            $date = $date -1;
+        }
+        $date = date('Y-m-d', strtotime(date('Y')."W".$date."1"));
+        if(Timesheets::where('startdate', '=', $date)->where('user', '=', Auth::id())->count() == 0){
+            $userInfo = new Timesheets;
+            $userInfo->user = Auth::id();
+            $userInfo->startdate = $date;
+            $userInfo->save();
 
-        return view('home', compact('userInfo'));
+        }
+        return redirect(route('select'));
+    }
+
+    public function saveSignature()
+    {
+        Timesheets::where('startdate', '=', request('date'))->where('user', '=', Auth::id())->update(['signature' => request('signature')]);
+
+        return redirect('select');
     }
 }

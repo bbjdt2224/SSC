@@ -6,7 +6,7 @@
     <form action='{{ action('HomeController@store') }}' method='POST'>
 
         {{ csrf_field()}}
-
+        <input type='hidden' name='id' value='{{$userInfo->id}}'>
         <div class="row">
             <div class="col-md-3">
                 <br/>
@@ -89,8 +89,10 @@
                 </tr>
             </tbody>
         </table>
-        <input type="submit" class="btn btn-primary" name="save" value="Save">
-        <input type="submit" class="btn btn-success" name="submit" value="Submit">
+        @if($userInfo->submitted == 0)
+            <input type="submit" class="btn btn-primary" name="save" value="Save">
+            <input type="submit" class="btn btn-success" name="submit" value="Submit">
+        @endif
     </form>
 </div>
 

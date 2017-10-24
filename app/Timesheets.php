@@ -6,7 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Timesheets extends Model
 {
-        protected $fillable = [
+    protected $fillable = [
         'user', 'startdate', 'firstweek', 'secondweek', 'totals',
+    ];
+
+    protected $attributes = [
+    	'firstWeek' => "-,-,-,-,-,-,-,0|-,-,-,-,-,-,-,0|-,-,-,-,-,-,-,0|-,-,-,-,-,-,-,0|-,-,-,-,-,-,-,0|-,-,-,-,-,-,-,0|-,-,-,-,-,-,-,0",
+    	'secondweek' => "-,-,-,-,-,-,-,0|-,-,-,-,-,-,-,0|-,-,-,-,-,-,-,0|-,-,-,-,-,-,-,0|-,-,-,-,-,-,-,0|-,-,-,-,-,-,-,0|-,-,-,-,-,-,-,0",
+    	'totals' => "0,0,0",
+    	'submitted' => "0",
     ];
 }

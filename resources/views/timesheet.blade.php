@@ -81,5 +81,6 @@
                 </tr>
             </tbody>
         </table>
+        <canvas id="signature" class="signature-pad" width="600px" height="150px" value="{{$timesheet->signature}}"></canvas>
     </div>
 @endsection
