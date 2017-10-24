@@ -12,7 +12,7 @@
 				@foreach($all as $timesheet)
 					<tr>
 						<td>
-							<a href="{{route('home', ['date' => $timesheet->startdate])}}" class='btn btn-default'>
+							<a href="{{route('date', ['date' => $timesheet->startdate])}}" class='btn btn-default'>
 								{{$timesheet->startdate}}
 							</a>
 							
