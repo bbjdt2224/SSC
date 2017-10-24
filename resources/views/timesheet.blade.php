@@ -81,6 +81,6 @@
                 </tr>
             </tbody>
         </table>
-        <canvas width="600px" height="150px" value="{{$timesheet->signature}}"></canvas>
+        <img width="300px" height="75px" src="{{$timesheet->signature}}">
     </div>
 @endsection
