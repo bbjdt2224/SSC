@@ -24,7 +24,7 @@ class CreateTimesheetsTable extends Migration
             $table->string('secondweek')->default($defaultString);
             $table->string('totals')->default('0,0,0');
             $table->boolean('submitted')->default('0');
-            $table->binary('signature');
+            $table->binary('signature')->nullable();
             $table->timestamps();
         });
     }
