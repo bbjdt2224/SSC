@@ -46,11 +46,10 @@ class AdminController extends Controller
     	return redirect('admin');
     }
 
-    public function viewUser($id)
+    public function viewUser($id, $date)
     {
-       
-    	$user = User::find($id);
-        $timesheet = Timesheets::where('user', '=', $user->id)->orderBy('startdate', 'desc')->first();
+       $user = User::find($id);
+        $timesheet = Timesheets::where('user', '=', $id)->where('startdate', '=', $date)->first();
 
     	
 
@@ -71,7 +70,7 @@ class AdminController extends Controller
     {
        
     	$users = array();
-    	$records = Timesheets::all()->where('startdate', '=', request('date'));
+    	$records = Timesheets::whereBetween('startdate', [date('Y-m-d', strtotime('-13 day', strtotime(request('date')))),request('date')])->get();
     	foreach($records as $record){
     		$users[] = User::where('id', '=', $record->user)->first();
     	}

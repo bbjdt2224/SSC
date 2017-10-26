@@ -18,7 +18,7 @@
 					<tr>
 						<td>
 							@if($user[1] != null)
-							<a href='{{route('timesheet', ['id' => $user[0]->id])}}'>
+							<a href='{{route('timesheet', ['id' => $user[0]->id, 'date'=>$user[1]->startdate])}}'>
 							@else
 							<a href='#'>
 							@endif

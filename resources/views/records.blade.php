@@ -12,7 +12,7 @@
 				@foreach($records as $record)
 					<tr>
 						<td>
-							{{$users[$counter]->name}}
+							<a href="{{route('timesheet', ['id'=>$users[$counter]->id, 'date'=>$record->startdate])}}">{{$users[$counter]->name}}</a>
 						</td>
 						<td>
 							{{\Carbon\Carbon::parse($record->startdate)->toFormattedDateString()}}

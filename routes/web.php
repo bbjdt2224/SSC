@@ -23,7 +23,7 @@ Route::get('/admin/change/{id}', 'AdminController@hours')->name('change');
 
 Route::post('/admin', 'AdminController@change')->name('admin');
 
-Route::get('/timesheet/{id}', 'AdminController@viewUser')->name('timesheet');
+Route::get('/timesheet/{id}/{date}', 'AdminController@viewUser')->name('timesheet');
 
 Route::get('/remove/{id}', 'AdminController@remove')->name('remove');
 
