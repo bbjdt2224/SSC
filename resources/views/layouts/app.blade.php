@@ -62,6 +62,9 @@
                                         <li>
                                             <a href={{route('admin')}}>Current</a>
                                         </li>
+                                        <li>
+                                            <a href={{route('edit')}}>Employees</a>
+                                        </li>
                                     @endif
                                     <li>
                                         <a href="{{ route('logout') }}"

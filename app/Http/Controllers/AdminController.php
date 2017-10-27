@@ -94,4 +94,16 @@ class AdminController extends Controller
         Timesheets::where('user', '=', $id)->where('startdate', '=', $date)->update(['submitted' => 0]);
         return redirect(route('admin'));
     }
+
+    public function allEmployees(){
+        $users = User::all();
+        return view('allEmployees', compact('users'));
+    }
+
+    public function update(){
+        for($i = 0; $i < count(request('id')); $i ++){
+            User::where('id', '=', request('id')[$i])->update(['fundcc'=>request('fundcc')[$i],'jobcode'=>request('jobcode')[$i],'admin'=>request('admin')[$i],'hours'=>request('hours')[$i]]);
+        }
+        return redirect(route('admin'));
+    }
 }

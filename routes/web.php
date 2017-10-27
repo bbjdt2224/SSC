@@ -40,3 +40,7 @@ Route::get('/restore/{id}', 'AdminController@restorePast')->name('revive');
 Route::post('/signature', 'HomeController@saveSignature')->name('signature');
 
 Route::get('/allowEdit/{id}/{date}', 'AdminController@allowEdit')->name('allowEdit');
+
+Route::get('/editEmployees', 'AdminController@allEmployees')->name('edit');
+
+Route::post('/updateEmployees', 'AdminController@update')->name('update');
