@@ -72,7 +72,7 @@ class AdminController extends Controller
     	$users = array();
     	$records = Timesheets::whereBetween('startdate', [date('Y-m-d', strtotime('-13 day', strtotime(request('date')))),request('date')])->get();
     	foreach($records as $record){
-    		$users[] = User::where('id', '=', $record->user)->first();
+    		$users[] = User::withTrashed()->where('id', '=', $record->user)->first();
     	}
     	return view('records', compact('records', 'users'));
     }
