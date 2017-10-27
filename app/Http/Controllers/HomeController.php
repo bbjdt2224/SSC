@@ -32,7 +32,7 @@ class HomeController extends Controller
         if($userInfo == null){
             $userInfo = Timesheets::orderBy('id', 'desc')->first();
         }
-        return view('home', compact('userInfo'));
+        return view('user.usertimesheet', compact('userInfo'));
     }
 
     public function getWeek($date)
@@ -42,7 +42,7 @@ class HomeController extends Controller
         if($userInfo == null){
             $userInfo = Timesheets::orderBy('id', 'desc')->first();
         }
-        return view('home', compact('userInfo'));
+        return view('user.usertimesheet', compact('userInfo'));
     }
 
     public function store()
@@ -70,11 +70,11 @@ class HomeController extends Controller
         Timesheets::where('user', '=', Auth::id())->where('id', '=', request('id'))->update(['firstweek' => $week1,'secondweek' => $week2, 'totals'=> $totals, 'startdate' => $date]);
 
         if(request('save')){
-            return view('save');
+            return view('user.save');
         }
         else if(request('submit')){
             Timesheets::where('user', '=', Auth::id())->where('id', '=', request('id'))->update(['submitted' => 1]);
-            return view('sign', compact('date'));
+            return view('user.sign', compact('date'));
         }
         
     }
@@ -103,13 +103,13 @@ class HomeController extends Controller
             $userInfo->save();
 
         }
-        return redirect(route('select'));
+        return redirect(route('home'));
     }
 
     public function saveSignature()
     {
         Timesheets::where('startdate', '=', request('date'))->where('user', '=', Auth::id())->update(['signature' => request('signature')]);
 
-        return redirect('select');
+        return redirect('home');
     }
 }

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <a href="{{ route('select') }}" class='btn btn-danger'>Back</a>
+    <a href="{{ route('home') }}" class='btn btn-danger'>Back</a>
     <form action='{{ action('HomeController@store') }}' method='POST'>
 
         {{ csrf_field()}}

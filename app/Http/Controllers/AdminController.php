@@ -26,14 +26,14 @@ class AdminController extends Controller
             $timesheet = Timesheets::where('user', '=', $user->id)->orderBy('startdate', 'desc')->first();
             $usersInfo[] = array($user, $timesheet);
     	}
-    	return view('admin', compact('usersInfo'));
+    	return view('admin.admin', compact('usersInfo'));
     }
 
     public function hours($id)
     {
        
     	$user = User::find($id);
-    	return view('changehours', compact('user'));
+    	return view('admin.changehours', compact('user'));
     }
 
     public function change()
@@ -54,7 +54,7 @@ class AdminController extends Controller
 
     	
 
-    	return view('timesheet', compact('user', 'timesheet'));
+    	return view('admin.timesheet', compact('user', 'timesheet'));
     }
 
     public function remove($id)
@@ -75,13 +75,13 @@ class AdminController extends Controller
     	foreach($records as $record){
     		$users[] = User::withTrashed()->where('id', '=', $record->user)->first();
     	}
-    	return view('records', compact('records', 'users'));
+    	return view('admin.records', compact('records', 'users'));
     }
 
     public function getPastUsers()
     {
         $past = User::onlyTrashed()->get();
-        return view('pastusers', compact('past'));
+        return view('admin.pastusers', compact('past'));
     }
 
     public function restorePast($id)
@@ -98,7 +98,7 @@ class AdminController extends Controller
 
     public function allEmployees(){
         $users = User::all();
-        return view('allEmployees', compact('users'));
+        return view('admin.allEmployees', compact('users'));
     }
 
     public function update(){

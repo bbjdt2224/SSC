@@ -7,13 +7,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/usertimesheet', 'HomeController@index')->name('usertimesheet');
 
-Route::post('/home', 'HomeController@store')->name('home');
+Route::post('/usertimesheet', 'HomeController@store')->name('usertimesheet');
 
 Route::get('/home/{date}', 'HomeController@getWeek')->name('date');
 
-Route::get('/select', 'HomeController@select')->name('select');
+Route::get('/home', 'HomeController@select')->name('home');
 
 Route::get('/new', 'HomeController@new')->name('new');
 
@@ -28,7 +28,7 @@ Route::get('/timesheet/{id}/{date}', 'AdminController@viewUser')->name('timeshee
 Route::get('/remove/{id}', 'AdminController@remove')->name('remove');
 
 Route::get('/records', function(){
-	return view('search');
+	return view('admin.search');
 })->name('records');
 
 Route::post('/search', 'AdminController@getRecords')->name('search');
