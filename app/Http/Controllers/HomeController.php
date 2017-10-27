@@ -82,7 +82,7 @@ class HomeController extends Controller
     public function select()
     {
         
-        $all = Timesheets::where('user', '=', Auth::id())->get();
+        $all = Timesheets::where('user', '=', Auth::id())->orderBy('startdate', 'desc')->get();
 
         return view('select', compact('all'));
 
