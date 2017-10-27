@@ -13,6 +13,7 @@ class AdminController extends Controller
 
     public function __construct()
     {
+        $this->middleware('auth');
         $this->middleware('admin');
     }
 
@@ -48,7 +49,7 @@ class AdminController extends Controller
 
     public function viewUser($id, $date)
     {
-       $user = User::find($id);
+       $user = User::withTrashed()->find($id);
         $timesheet = Timesheets::where('user', '=', $id)->where('startdate', '=', $date)->first();
 
     	
