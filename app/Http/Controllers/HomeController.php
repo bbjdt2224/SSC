@@ -35,6 +35,7 @@ class HomeController extends Controller
         return view('user.usertimesheet', compact('userInfo'));
     }
 
+    // get a user timesheet where the start date is the same as the given date
     public function getWeek($date)
     {   
         
@@ -45,6 +46,7 @@ class HomeController extends Controller
         return view('user.usertimesheet', compact('userInfo'));
     }
 
+    // save changes user made to their timesheet
     public function store()
     {
         $date = date('W', strtotime(request('startdate')));
@@ -79,6 +81,7 @@ class HomeController extends Controller
         
     }
 
+    // gets all timesheets made by user
     public function select()
     {
         
@@ -88,6 +91,7 @@ class HomeController extends Controller
 
     }
 
+    // makes a new timesheet
     public function new()
     {
         
@@ -106,6 +110,7 @@ class HomeController extends Controller
         return redirect(route('home'));
     }
 
+    // saves the signature to the database
     public function saveSignature()
     {
         Timesheets::where('startdate', '=', request('date'))->where('user', '=', Auth::id())->update(['signature' => request('signature')]);

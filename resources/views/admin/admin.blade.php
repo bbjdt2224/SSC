@@ -1,5 +1,8 @@
 @extends('layouts.app')
-
+{{-- table of all current users 
+	allows to view most recent timesheet change schedued hours and delete user
+	also allows user to edit submitted timesheets
+ --}}
 @section('content')
 	<div class="container">
 		<a href="{{route('prevusers')}}" class="btn btn-primary">Past Employees</a>
@@ -17,6 +20,7 @@
 				@foreach($usersInfo as $user)
 					<tr>
 						<td>
+							{{-- user name and link to most recent timesheet --}}
 							@if($user[1] != null)
 							<a href='{{route('timesheet', ['id' => $user[0]->id, 'date'=>$user[1]->startdate])}}'>
 							@else
@@ -28,6 +32,7 @@
 						</td>
 						@if($user[1] != null)
 							<td>
+								{{-- if the user has sumbitted the timesheet --}}
 								@if($user[1]->submitted == 0)
 									No
 								@else
@@ -35,12 +40,15 @@
 								@endif
 							</td>
 							<td>
+								{{-- start date of most recent timesheet --}}
 								{{\Carbon\Carbon::parse($user[1]->startdate)->toFormattedDateString()}}
 							</td>
 							<td>
+								{{-- hour diffrence between scheduled and timesheet --}}
 								{{explode(',', $user[1]->totals)[2] - $user[0]->hours}}
 							</td>
 							<td>
+								{{-- allowing the user to edit their submitted timesheet --}}
 								@if($user[1]->submitted == 0)
 									<a href="#" class='btn btn-primary' disabled>Allow</a>
 								@else
@@ -50,9 +58,11 @@
 							<td></td><td></td><td></td><td></td>
 						@endif
 						<td>
+							{{-- change the scheduled hours --}}
 							<a href='{{route('change', ['id' => $user[0]->id])}}' class="btn btn-primary">Change</a>
 						</td>
 						<td>
+							{{-- delete the user --}}
 							<a href='{{route('remove', ['id' => $user[0]->id])}}' class='btn btn-danger'>Remove</button>
 						</td>
 					</tr>

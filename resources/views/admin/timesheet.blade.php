@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+{{-- admin view of user timesheet --}}
 @section('content')
 	<style>
 		td{
@@ -26,6 +26,7 @@
                     $oneDay = 86400; $counter = 0;
                     $totals = explode(',', $timesheet->totals);
                 ?>
+                {{-- loop through days in first week --}}
             	@foreach(explode('|',$timesheet->firstweek) as $day)
             		<tr>
             			<td>{{date('l',strtotime($timesheet->startdate) + ($counter*$oneDay))}}</td>
@@ -36,6 +37,7 @@
                     </tr>
                     <?php $counter++;?>
                 @endforeach
+                {{-- prints week 1 total --}}
                 <tr>
                     @for($i = 0; $i < 8; $i ++)
                         <td></td>
@@ -47,6 +49,7 @@
                         {{$totals[0]}}
                     </td>
                 </tr>
+                {{-- loops through second week --}}
                 @foreach(explode('|',$timesheet->secondweek) as $day)
             		<tr>
             			<td>{{date('l',strtotime($timesheet->startdate) + ($counter*$oneDay))}}</td>
@@ -57,6 +60,7 @@
                     </tr>
                     <?php $counter++;?>
                 @endforeach
+                {{-- prints week 2 total --}}
                 <tr>
                     @for($i = 0; $i < 8; $i ++)
                         <td></td>
@@ -68,6 +72,7 @@
                         {{$totals[1]}}
                     </td>
                 </tr>
+                {{-- prints overall total --}}
                 <tr>
                     @for($i = 0; $i < 8; $i ++)
                         <td></td>
@@ -81,6 +86,7 @@
                 </tr>
             </tbody>
         </table>
+        {{-- signature --}}
         <img width="300px" height="75px" src="{{$timesheet->signature}}">
     </div>
 @endsection

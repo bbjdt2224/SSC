@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+{{-- input for past timesheet search --}}
 @section('content')
 	<div class="container">
 		<form method='POST' action='{{route("search")}}'>

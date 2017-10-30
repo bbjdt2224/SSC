@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+{{-- view and edit employee information --}}
 @section('content')
 	<div class="container">
 		<form action="{{route('update')}}" method="post">
@@ -17,16 +17,20 @@
 						@if($user->name != "Admin")
 							<tr>
 								<td>
+									{{-- name --}}
 									{{$user->name}}
 									<input type="hidden" name="id[]" value="{{$user->id}}">
 								</td>
 								<td>
+									{{-- fund and cost center --}}
 									<input type="text" name="fundcc[]" class="form-control" value="{{$user->fundcc}}">
 								</td>
 								<td>
+									{{-- job code --}}
 									<input type="text" name="jobcode[]" class="form-control" value="{{$user->jobcode}}">
 								</td>
 								<td>
+									{{-- users adim status --}}
 									<select name="admin[]" class="form-control">
 										@if($user->admin == 1) 
 											<option selected="selected" value="1">Yes</option>
@@ -38,6 +42,7 @@
 									</select>
 								</td>
 								<td>
+									{{-- number of scheduled hours --}}
 									<input type="number" name="hours[]" class="form-control" value="{{$user->hours}}">
 								</td>
 							</tr>

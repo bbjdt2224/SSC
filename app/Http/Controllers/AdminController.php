@@ -17,6 +17,7 @@ class AdminController extends Controller
         $this->middleware('admin');
     }
 
+    // gets all user information and most recent timesheet opens admin view
     public function index()
     {
        
@@ -29,6 +30,7 @@ class AdminController extends Controller
     	return view('admin.admin', compact('usersInfo'));
     }
 
+    // gets a user by id and sends it to the change hours page
     public function hours($id)
     {
        
@@ -36,6 +38,7 @@ class AdminController extends Controller
     	return view('admin.changehours', compact('user'));
     }
 
+    // takes the hours given from the form and updates the database
     public function change()
     {
         $hours = 0;
@@ -47,19 +50,18 @@ class AdminController extends Controller
     	return redirect('admin');
     }
 
+    // gets a user with an id and their timesheet with the date in the parameters
     public function viewUser($id, $date)
     {
        $user = User::withTrashed()->find($id);
         $timesheet = Timesheets::where('user', '=', $id)->where('startdate', '=', $date)->first();
 
-    	
-
     	return view('admin.timesheet', compact('user', 'timesheet'));
     }
 
+    // removes a user
     public function remove($id)
     {
-       
 
     	User::find($id)->delete();
 
@@ -67,6 +69,7 @@ class AdminController extends Controller
 
     }
 
+    // gets past timesheets within the past two weeks of the given date
     public function getRecords()
     {
        
@@ -78,12 +81,14 @@ class AdminController extends Controller
     	return view('admin.records', compact('records', 'users'));
     }
 
+    // gets deleted users
     public function getPastUsers()
     {
         $past = User::onlyTrashed()->get();
         return view('admin.pastusers', compact('past'));
     }
 
+    // revives deleted users
     public function restorePast($id)
     {
         User::withTrashed()->find($id)->restore();
@@ -91,16 +96,19 @@ class AdminController extends Controller
         return redirect('admin');
     }
 
+    // allows a user to edit a submitted timesheet
     public function allowEdit($id, $date){
         Timesheets::where('user', '=', $id)->where('startdate', '=', $date)->update(['submitted' => 0]);
         return redirect(route('admin'));
     }
 
+    // gets all employees
     public function allEmployees(){
         $users = User::all();
         return view('admin.allEmployees', compact('users'));
     }
 
+    //updates all employee data in database
     public function update(){
         for($i = 0; $i < count(request('id')); $i ++){
             User::where('id', '=', request('id')[$i])->update(['fundcc'=>request('fundcc')[$i],'jobcode'=>request('jobcode')[$i],'admin'=>request('admin')[$i],'hours'=>request('hours')[$i]]);

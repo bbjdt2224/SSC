@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+{{-- displays past timesheets and allows adim to view them --}}
 @section('content')
 	<div class="container">
 		<table class="table">

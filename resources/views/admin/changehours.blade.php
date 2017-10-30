@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+{{-- changes the number of scheduled hours --}}
 @section('content')
 	<div class="container">
 		Enter the number of hours per pay period that this person is scheduled to work
