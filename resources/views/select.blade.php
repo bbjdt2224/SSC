@@ -14,10 +14,15 @@
 				@foreach($all as $timesheet)
 					<tr>
 						<td>
-							<a href="{{route('date', ['date' => $timesheet->startdate])}}" class='btn btn-default'>
-								{{$timesheet->startdate}}
-							</a>
-							
+							@if($timesheet->submitted == 1)
+								<a href="{{route('date', ['date' => $timesheet->startdate])}}" class='btn btn-success'>
+									{{$timesheet->startdate}}
+								</a>
+							@else
+								<a href="{{route('date', ['date' => $timesheet->startdate])}}" class='btn btn-default'>
+									{{$timesheet->startdate}}
+								</a>
+							@endif
 						</td>
 					</tr>
 				@endforeach				

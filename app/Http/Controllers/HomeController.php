@@ -69,7 +69,14 @@ class HomeController extends Controller
                 $week2 .= "|";
             }
         }
-        Timesheets::where('user', '=', Auth::id())->where('id', '=', request('id'))->update(['firstweek' => $week1,'secondweek' => $week2, 'totals'=> $totals, 'startdate' => $date]);
+
+        if(Timesheets::where('user', '=', Auth::id())->where('startdate', '=', $date)->first()->id == request('id')){
+            Timesheets::where('user', '=', Auth::id())->where('id', '=', request('id'))->update(['firstweek' => $week1,'secondweek' => $week2, 'totals'=> $totals, 'startdate' => $date]);
+        }
+        else{
+            Timesheets::where('user', '=', Auth::id())->where('id', '=', request('id'))->update(['firstweek' => $week1,'secondweek' => $week2, 'totals'=> $totals]);
+            return redirect()->back()->withErrors(['Timesheet already exists for that date']);
+        }
 
         if(request('save')){
             return view('user.save');

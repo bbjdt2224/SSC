@@ -2,6 +2,9 @@
 {{-- allows user to view and edit timesheet --}}
 @section('content')
 <div class="container">
+    @if($errors->any())
+        <h4 style="color: red;">{{$errors->first()}}</h4>
+    @endif
     {{-- button to go back to select timesheet screen --}}
     <a href="{{ route('home') }}" class='btn btn-danger'>Back</a>
     <form action='{{ action('HomeController@store') }}' method='POST'>
