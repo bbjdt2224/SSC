@@ -87,6 +87,10 @@
             </tbody>
         </table>
         {{-- signature --}}
-        <img width="300px" height="75px" src="{{$timesheet->signature}}">
+        @if($timesheet->signature != null)
+            <img width="300px" height="75px" src="{{$timesheet->signature}}">
+        @else
+            <img height="75px" src="{{asset('thumbsdown.png')}}">
+        @endif
     </div>
 @endsection
