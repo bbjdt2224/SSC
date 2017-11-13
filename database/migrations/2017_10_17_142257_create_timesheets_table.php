@@ -16,7 +16,7 @@ class CreateTimesheetsTable extends Migration
 
 
         Schema::create('timesheets', function (Blueprint $table) {
-         $defaultString = "-,-,-,-,-,-,-,0|-,-,-,-,-,-,-,0|-,-,-,-,-,-,-,0|-,-,-,-,-,-,-,0|-,-,-,-,-,-,-,0|-,-,-,-,-,-,-,0|-,-,-,-,-,-,-,0";
+         $defaultString = "-,-,-,-,-,-,,0|-,-,-,-,-,-,,0|-,-,-,-,-,-,,0|-,-,-,-,-,-,,0|-,-,-,-,-,-,,0|-,-,-,-,-,-,,0|-,-,-,-,-,-,,0";
             $table->increments('id');
             $table->string('user');
             $table->date('startdate');
