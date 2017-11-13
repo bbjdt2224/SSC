@@ -18,8 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->text('fundcc');
-            $table->text('jobcode');
+            $table->text('fundcc')->nullable();
+            $table->text('jobcode')->nullable();
             $table->boolean('admin')->default('0');
             $table->integer('hours')->default('0');
             $table->rememberToken();
