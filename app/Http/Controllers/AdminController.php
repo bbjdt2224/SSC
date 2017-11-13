@@ -74,11 +74,12 @@ class AdminController extends Controller
     {
        
     	$users = array();
-    	$records = Timesheets::whereBetween('startdate', [date('Y-m-d', strtotime('-13 day', strtotime(request('date')))),request('date')])->get();
+        $date = request('date');
+    	$records = Timesheets::whereBetween('startdate', [date('Y-m-d', strtotime('-13 day', strtotime($date))),$date])->get();
     	foreach($records as $record){
     		$users[] = User::withTrashed()->where('id', '=', $record->user)->first();
     	}
-    	return view('admin.records', compact('records', 'users'));
+    	return view('admin.records', compact('records', 'users', 'date'));
     }
 
     // gets deleted users

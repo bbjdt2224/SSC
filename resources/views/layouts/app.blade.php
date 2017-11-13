@@ -57,13 +57,16 @@
                                 <ul class="dropdown-menu" role="menu">
                                     @if(Auth::User()->admin == 1)
                                         <li>
-                                            <a href={{route('records')}}>Records</a>
+                                            <a href={{route('records')}}>Timesheet Records</a>
                                         </li>
                                         <li>
-                                            <a href={{route('admin')}}>Current</a>
+                                            <a href={{route('admin')}}>Current Timesheets</a>
                                         </li>
                                         <li>
-                                            <a href={{route('edit')}}>Employees</a>
+                                            <a href={{route('edit')}}>Current Employees</a>
+                                        </li>
+                                        <li>
+                                            <a href={{route('prevusers')}}>Past Employees</a>
                                         </li>
                                     @endif
                                     <li>
