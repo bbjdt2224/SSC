@@ -14,9 +14,12 @@
 						<td>{{$person->name}}</td>
 						<td>{{$person->deleted_at}}</td>
 						{{-- allows the user to be un-deleted --}}
-						<td><a href="{{route('revive', ['id' => $person->id])}}" class="btn btn-warning">Un-Remove</a></td>
+						<td><a href="{{route('revive', ['id' => $person->id])}}" class="btn btn-warning">Restore</a></td>
 					</tr>
 				@endforeach
+				@if(count($past) == 0)
+					<h2>No Past Employees</h2>
+				@endif
 			</tbody>
 		</table>
 	</div>
