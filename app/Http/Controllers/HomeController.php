@@ -69,8 +69,10 @@ class HomeController extends Controller
                 $week2 .= "|";
             }
         }
-
-        if(Timesheets::where('user', '=', Auth::id())->where('startdate', '=', $date)->first()->id == request('id')){
+        if(Timesheets::where('user', '=', Auth::id())->where('startdate', '=', $date)->first() == null){
+            Timesheets::where('user', '=', Auth::id())->where('id', '=', request('id'))->update(['firstweek' => $week1,'secondweek' => $week2, 'totals'=> $totals, 'startdate' => $date]);
+        }
+        elseif(Timesheets::where('user', '=', Auth::id())->where('startdate', '=', $date)->first()->id == request('id')){
             Timesheets::where('user', '=', Auth::id())->where('id', '=', request('id'))->update(['firstweek' => $week1,'secondweek' => $week2, 'totals'=> $totals, 'startdate' => $date]);
         }
         else{

@@ -16,11 +16,11 @@
 						<td>
 							@if($timesheet->submitted == 1)
 								<a href="{{route('date', ['date' => $timesheet->startdate])}}" class='btn btn-success'>
-									{{$timesheet->startdate}}
+									{{date('m/d/Y', strtotime($timesheet->startdate))}}
 								</a>
 							@else
 								<a href="{{route('date', ['date' => $timesheet->startdate])}}" class='btn btn-default'>
-									{{$timesheet->startdate}}
+									{{date('m/d/Y', strtotime($timesheet->startdate))}}
 								</a>
 							@endif
 						</td>
