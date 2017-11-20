@@ -19,6 +19,7 @@ class AdminSeeder extends Seeder
             'password' => bcrypt('admin'),
             'fundcc' => ' ',
             'jobcode' => ' ',
+            'admin' => '1';
         ]);
     }
 }

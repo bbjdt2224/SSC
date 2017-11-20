@@ -16,16 +16,17 @@ class CreateTimesheetsTable extends Migration
 
 
         Schema::create('timesheets', function (Blueprint $table) {
-         $defaultString = "-,-,-,-,-,-,,0|-,-,-,-,-,-,,0|-,-,-,-,-,-,,0|-,-,-,-,-,-,,0|-,-,-,-,-,-,,0|-,-,-,-,-,-,,0|-,-,-,-,-,-,,0";
             $table->increments('id');
-            $table->string('user');
+            $table->integer('user_id')->unsigned();
             $table->date('startdate');
-            $table->string('firstweek')->default($defaultString);
-            $table->string('secondweek')->default($defaultString);
             $table->string('totals')->default('0,0,0');
             $table->boolean('submitted')->default('0');
             $table->binary('signature')->nullable();
             $table->timestamps();
+        });
+
+        Schema::table('timesheets', function(Blueprint $table){
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -36,6 +37,9 @@ class CreateTimesheetsTable extends Migration
      */
     public function down()
     {
+        Schema::table('timesheets', function(Blueprint $table){
+            $table->dropForeign('user_id');
+        });
         Schema::dropIfExists('timesheets');
     }
 }

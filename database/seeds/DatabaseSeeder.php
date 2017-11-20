@@ -12,5 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         //$this->call(TimesheetSeeder::class);
+        
+        factory(App\Timesheets::class, 50)->create();
     }
 }

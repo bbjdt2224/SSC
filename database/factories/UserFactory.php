@@ -19,7 +19,11 @@ $factory->define(App\User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
+        'password' => $password ?: $password = bcrypt('password'),
+        'fundcc' => str_random(5),
+        'jobcode' => str_random(5),
+        'admin' => $faker->randomElement($array = array ('0','1')),
+        'hours' => $faker->randomDigitNotNull,
         'remember_token' => str_random(10),
     ];
 });
