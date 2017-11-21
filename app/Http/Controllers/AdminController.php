@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Timesheets;
 use App\User;
-use App\PreviousUsers;
+use App\Shifts;
 use Auth;
 
 class AdminController extends Controller
@@ -24,7 +24,7 @@ class AdminController extends Controller
     	$usersInfo = array();
     	$allUsers = User::all()->where('admin', '=', '0');
     	foreach($allUsers as $user){
-            $timesheet = Timesheets::where('user', '=', $user->id)->orderBy('startdate', 'desc')->first();
+            $timesheet = Timesheets::where('user_id', '=', $user->id)->orderBy('startdate', 'desc')->first();
             $usersInfo[] = array($user, $timesheet);
     	}
     	return view('admin.admin', compact('usersInfo'));
@@ -54,9 +54,9 @@ class AdminController extends Controller
     public function viewUser($id, $date)
     {
        $user = User::withTrashed()->find($id);
-        $timesheet = Timesheets::where('user', '=', $id)->where('startdate', '=', $date)->first();
-
-    	return view('admin.timesheet', compact('user', 'timesheet'));
+        $timesheet = Timesheets::where('user_id', '=', $id)->where('startdate', '=', $date)->first();
+        $shifts = Shifts::where('timesheet', '=', $timesheet->id)->get();
+    	return view('admin.timesheet', compact('user', 'timesheet', 'shifts'));
     }
 
     // removes a user
@@ -77,7 +77,7 @@ class AdminController extends Controller
         $date = request('date');
     	$records = Timesheets::whereBetween('startdate', [date('Y-m-d', strtotime('-13 day', strtotime($date))),$date])->get();
     	foreach($records as $record){
-    		$users[] = User::withTrashed()->where('id', '=', $record->user)->first();
+    		$users[] = User::withTrashed()->where('id', '=', $record->user_id)->first();
     	}
     	return view('admin.records', compact('records', 'users', 'date'));
     }

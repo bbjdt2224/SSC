@@ -56,3 +56,11 @@ function updateTotal(){
 
 }
 
+$( document ).ready(function() {
+	for(var i = 0; i < 14; i++){
+		updateTotals(i);
+		console.log(i);
+	}
+   
+});
+

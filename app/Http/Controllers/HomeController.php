@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Timesheets;
+use App\Shifts;
 use Auth;
 use Carbon\Carbon;
 
@@ -28,7 +29,7 @@ class HomeController extends Controller
     public function index()
     {
         
-        $userInfo = Timesheets::where('user', '=', Auth::id())->orderBy('startdate', 'desc')->first();
+        $userInfo = Timesheets::where('user_id', '=', Auth::id())->orderBy('startdate', 'desc')->first();
         if($userInfo == null){
             $userInfo = Timesheets::orderBy('id', 'desc')->first();
         }
@@ -39,11 +40,12 @@ class HomeController extends Controller
     public function getWeek($date)
     {   
         
-        $userInfo = Timesheets::where('user', '=', Auth::id())->where('startdate', '=', $date)->first();
+        $userInfo = Timesheets::where('user_id', '=', Auth::id())->where('startdate', '=', $date)->first();
+        $shifts = Shifts::where('timesheet', '=', $userInfo->id)->get();
         if($userInfo == null){
             $userInfo = Timesheets::orderBy('id', 'desc')->first();
         }
-        return view('user.usertimesheet', compact('userInfo'));
+        return view('user.usertimesheet', compact('userInfo', 'shifts'));
     }
 
     // save changes user made to their timesheet
@@ -53,30 +55,105 @@ class HomeController extends Controller
         if($date%2 != 1){
             $date = $date -1;
         }
-        $date = date('Y-m-d', strtotime(date('Y')."W".$date."1"));
-        $week1 = "";
-        $week2 = "";
         $totals = request('week1total').",".request('week2total').",".request('total');
-        for($i = 0; $i < 7; $i++){
-            $week1 .= request($i.'morningbegin').",".request($i.'morningend').",".request($i.'afternoonbegin').",".request($i.'afternoonend').",".request($i.'eveningbegin').",".request($i.'eveningend').",".request($i.'reason').",".request($i.'total');
-            if($i < 6){
-                $week1 .= "|";
+        for($i = 0; $i < 14; $i++){
+            if(request($i.'morning') != null){
+                if($i < 7){
+                    $today = date('Y-m-d', strtotime(date('Y')."W".$date.($i+1)));
+                }
+                else{
+                    $date = $date+1;
+                    $today = date('Y-m-d', strtotime(date('Y')."W".$date.(($i%7)+1)));
+                }
+                $start = $today." ".date('H:i:s', strtotime(request($i.'morningbegin')));
+                $end = $today." ".date('H:i:s', strtotime(request($i.'morningend')));
+                Shifts::find(request($i.'morning'))->update(['start'=> $start, 'end' => $end, 'timesheet'=> request('id'), 'tod' => 'morning']);
+            }
+            elseif(request($i.'morningbegin') != "-" && request($i.'morningend') != "-"){
+                if($i < 7){
+                    $today = date('Y-m-d', strtotime(date('Y')."W".$date.($i+1)));
+                }
+                else{
+                    $date = $date+1;
+                    $today = date('Y-m-d', strtotime(date('Y')."W".$date.(($i%7)+1)));
+                }
+                $start = $today." ".date('H:i:s', strtotime(request($i.'morningbegin')));
+                $end = $today." ".date('H:i:s', strtotime(request($i.'morningend')));
+                Shifts::create([
+                    'start' => $start,
+                    'end' => $end,
+                    'timesheet' => request('id'),
+                    'tod' => 'morning',
+                ]);
+            }
+            if(request($i.'afternoon') != null){
+                if($i < 7){
+                    $today = date('Y-m-d', strtotime(date('Y')."W".$date.($i+1)));
+                }
+                else{
+                    $date = $date+1;
+                    $today = date('Y-m-d', strtotime(date('Y')."W".$date.(($i%7)+1)));
+                }
+                $start = $today." ".date('H:i:s', strtotime(request($i.'afternoonbegin')));
+                $end = $today." ".date('H:i:s', strtotime(request($i.'afternoonend')));
+                Shifts::find(request($i.'afternoon'))->update(['start'=> $start, 'end' => $end, 'timesheet'=> request('id'), 'tod' => 'afternoon']);
+            }
+            elseif(request($i.'afternoonbegin') != "-" && request($i.'afternoonend') != "-"){
+                if($i < 7){
+                    $today = date('Y-m-d', strtotime(date('Y')."W".$date.($i+1)));
+                }
+                else{
+                    $date = $date+1;
+                    $today = date('Y-m-d', strtotime(date('Y')."W".$date.(($i%7)+1)));
+                }
+                $start = $today." ".date('H:i:s', strtotime(request($i.'afternoonbegin')));
+                $end = $today." ".date('H:i:s', strtotime(request($i.'afternoonend')));
+                Shifts::create([
+                    'start' => $start,
+                    'end' => $end,
+                    'timesheet' => request('id'),
+                    'tod' => 'afternoon',
+                ]);
+            }
+            if(request($i.'evening') != null){
+                if($i < 7){
+                    $today = date('Y-m-d', strtotime(date('Y')."W".$date.($i+1)));
+                }
+                else{
+                    $date = $date+1;
+                    $today = date('Y-m-d', strtotime(date('Y')."W".$date.(($i%7)+1)));
+                }
+                $start = $today." ".date('H:i:s', strtotime(request($i.'eveningbegin')));
+                $end = $today." ".date('H:i:s', strtotime(request($i.'eveningend')));
+                Shifts::find(request($i.'evening'))->update(['start'=> $start, 'end' => $end, 'timesheet'=> request('id'), 'tod' => 'evening']);
+            }
+            elseif(request($i.'eveningbegin') != "-" && request($i.'eveningend') != "-"){
+                if($i < 7){
+                    $today = date('Y-m-d', strtotime(date('Y')."W".$date.($i+1)));
+                }
+                else{
+                    $date = $date+1;
+                    $today = date('Y-m-d', strtotime(date('Y')."W".$date.(($i%7)+1)));
+                }
+                $start = $today." ".date('H:i:s', strtotime(request($i.'eveningbegin')));
+                $end = $today." ".date('H:i:s', strtotime(request($i.'eveningend')));
+                Shifts::create([
+                    'start' => $start,
+                    'end' => $end,
+                    'timesheet' => request('id'),
+                    'tod' => 'evening',
+                ]);
             }
         }
-        for($i = 7; $i < 14; $i++){
-            $week2 .= request($i.'morningbegin').",".request($i.'morningend').",".request($i.'afternoonbegin').",".request($i.'afternoonend').",".request($i.'eveningbegin').",".request($i.'eveningend').",".request($i.'reason').",".request($i.'total');
-            if($i < 13){
-                $week2 .= "|";
-            }
+        $date = date('Y-m-d', strtotime(date('Y')."W".$date."1"));
+        if(Timesheets::where('user_id', '=', Auth::id())->where('startdate', '=', $date)->first() == null){
+            Timesheets::where('user_id', '=', Auth::id())->where('id', '=', request('id'))->update([ 'totals'=> $totals, 'startdate' => $date]);
         }
-        if(Timesheets::where('user', '=', Auth::id())->where('startdate', '=', $date)->first() == null){
-            Timesheets::where('user', '=', Auth::id())->where('id', '=', request('id'))->update(['firstweek' => $week1,'secondweek' => $week2, 'totals'=> $totals, 'startdate' => $date]);
-        }
-        elseif(Timesheets::where('user', '=', Auth::id())->where('startdate', '=', $date)->first()->id == request('id')){
-            Timesheets::where('user', '=', Auth::id())->where('id', '=', request('id'))->update(['firstweek' => $week1,'secondweek' => $week2, 'totals'=> $totals, 'startdate' => $date]);
+        elseif(Timesheets::where('user_id', '=', Auth::id())->where('startdate', '=', $date)->first()->id == request('id')){
+            Timesheets::where('user_id', '=', Auth::id())->where('id', '=', request('id'))->update([ 'totals'=> $totals, 'startdate' => $date]);
         }
         else{
-            Timesheets::where('user', '=', Auth::id())->where('id', '=', request('id'))->update(['firstweek' => $week1,'secondweek' => $week2, 'totals'=> $totals]);
+            Timesheets::where('user_id', '=', Auth::id())->where('id', '=', request('id'))->update(['totals'=> $totals]);
             return redirect()->back()->withErrors(['Timesheet already exists for that date']);
         }
 
@@ -84,7 +161,7 @@ class HomeController extends Controller
             return view('user.save');
         }
         else if(request('submit')){
-            Timesheets::where('user', '=', Auth::id())->where('id', '=', request('id'))->update(['submitted' => 1]);
+            Timesheets::where('user_id', '=', Auth::id())->where('id', '=', request('id'))->update(['submitted' => 1]);
             return view('user.sign', compact('date'));
         }
         
@@ -94,7 +171,7 @@ class HomeController extends Controller
     public function select()
     {
         
-        $all = Timesheets::where('user', '=', Auth::id())->orderBy('startdate', 'desc')->get();
+        $all = Timesheets::where('user_id', '=', Auth::id())->orderBy('startdate', 'desc')->get();
 
         return view('select', compact('all'));
 
@@ -109,9 +186,9 @@ class HomeController extends Controller
             $date = $date -1;
         }
         $date = date('Y-m-d', strtotime(date('Y')."W".$date."1"));
-        if(Timesheets::where('startdate', '=', $date)->where('user', '=', Auth::id())->count() == 0){
+        if(Timesheets::where('startdate', '=', $date)->where('user_id', '=', Auth::id())->count() == 0){
             $userInfo = new Timesheets;
-            $userInfo->user = Auth::id();
+            $userInfo->user_id = Auth::id();
             $userInfo->startdate = $date;
             $userInfo->save();
 
@@ -122,7 +199,7 @@ class HomeController extends Controller
     // saves the signature to the database
     public function saveSignature()
     {
-        Timesheets::where('startdate', '=', request('date'))->where('user', '=', Auth::id())->update(['signature' => request('signature')]);
+        Timesheets::where('startdate', '=', request('date'))->where('user_id', '=', Auth::id())->update(['signature' => request('signature')]);
 
         return redirect('home');
     }

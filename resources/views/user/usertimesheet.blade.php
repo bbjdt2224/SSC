@@ -39,19 +39,26 @@
                  --}}
                 <?php 
                     $oneDay = 86400;
-                    $counter = 0;
                     $totals = explode(',', $userInfo->totals);
                 ?>
                 {{-- loop goes through each day in the first week --}}
-                @foreach(explode('|', $userInfo->firstweek) as $firstweek)
+                @for($i = 0; $i < 7; $i ++)
                     <tr>
                         {{-- print the day date and all the timesheet information --}}
-                        <td>{{date('l',strtotime($userInfo->startdate) + ($counter*$oneDay))}}</td>
-                        <td>{{date('m/d/y',strtotime($userInfo->startdate) + ($counter*$oneDay))}}</td>
-                        @include('data.tablerow', [$inforow = explode(',', $firstweek), $counter])
+                        <td>{{date('l',strtotime($userInfo->startdate) + ($i*$oneDay))}}</td>
+                        <td>{{date('m/d/y',strtotime($userInfo->startdate) + ($i*$oneDay))}}</td>
+                        <?php
+                            $today = array();
+                            foreach($shifts as $shift){
+                                $date = explode(' ', $shift->start)[0];
+                                if($date == date('Y-m-d', strtotime($userInfo->startdate) + ($i*$oneDay))){
+                                    $today[] = $shift;
+                                }
+                            }
+                        ?>
+                        @include('data.tablerow', [$inforow = $today, $counter = $i])
                     </tr>
-                    <?php $counter++;?>
-                @endforeach
+                @endfor
                 {{-- print total for week 1 --}}
                 <tr>
                     @for($i = 0; $i < 8; $i ++)
@@ -66,14 +73,22 @@
                      <input type="hidden" name="week1total" value="{{$totals[0]}}" id="week1totalin">
                 </tr>
                 {{-- loop goes through each day in the second week --}}
-                @foreach(explode('|', $userInfo->secondweek) as $secondweek)
+                @for($i = 7; $i < 14; $i ++)
                     <tr>
                         <td>{{date('l',strtotime($userInfo->startdate) + ($counter*$oneDay))}}</td>
                         <td>{{date('m/d/y',strtotime($userInfo->startdate) + ($counter*$oneDay))}}</td>
-                        @include('data.tablerow', $inforow = explode(',', $secondweek))
+                        <?php
+                            $today = array();
+                            foreach($shifts as $shift->start){
+                                $date = explode(' ', $shift)[0];
+                                if($date == date('Y-m-d', strtotime($userInfo->startdate) + ($i*$oneDay))){
+                                    $today[] = $shift;
+                                }
+                            }
+                        ?>
+                        @include('data.tablerow', [$inforow = $today, $counter = $i])
                     </tr>
-                    <?php $counter++;?>
-                @endforeach
+                @endfor
                 {{-- print total for week 2 --}}
                  <tr>
                     @for($i = 0; $i < 8; $i ++)

@@ -10,8 +10,6 @@ $factory->define(App\Timesheets::class, function (Faker $faker) {
         	return factory(App\User::class)->create()->id;
         },
         'startdate' => $faker->date($format = 'Y-m-d', $max = 'now'),
-        'firstweek' => $week,
-        'secondweek'=> $week,
         'totals' => $faker->randomDigitNotNull.','.$faker->randomDigitNotNull.','.$faker->randomDigitNotNull,
         'submitted' => $faker->randomElement($array = array ('0','1')),
     ];

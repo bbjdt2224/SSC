@@ -27,16 +27,54 @@
                     $totals = explode(',', $timesheet->totals);
                 ?>
                 {{-- loop through days in first week --}}
-            	@foreach(explode('|',$timesheet->firstweek) as $day)
+            	@for($i = 0; $i < 7; $i ++)
             		<tr>
             			<td>{{date('l',strtotime($timesheet->startdate) + ($counter*$oneDay))}}</td>
                         <td>{{date('m/d/y',strtotime($timesheet->startdate) + ($counter*$oneDay))}}</td>
-                        @foreach(explode(',', $day) as $dayItem)
-                        	<td>{{$dayItem}}</td>
-                        @endforeach
+                        <?php
+                            $today = array();
+                            foreach($shifts as $shift){
+                                $date = explode(' ', $shift->start)[0];
+                                if($date == date('Y-m-d', strtotime($timesheet->startdate) + ($i*$oneDay))){
+                                    $today[] = $shift;
+                                }
+                            }
+                            $morningb = "";
+                            $morninge = "";
+                            $afternoonb = "";
+                            $afternoone = "";
+                            $eveningb = "";
+                            $eveninge = "";
+
+                            $morning = 0;
+                            $afternoon = 0;
+                            $evening = 0;
+
+                            foreach($today as $shift){
+
+                                ${$shift->tod.'b'} = date('g:i a', strtotime($shift->start));
+                                ${$shift->tod.'e'} = date('g:i a', strtotime($shift->end));
+                                if(${$shift->tod.'e'} < ${$shift->tod.'b'}){
+                                    $end = 24 + date('g',strtotime(${$shift->tod.'e'}));
+                                }
+                                else{
+                                    $end = date('g',strtotime(${$shift->tod.'e'}));
+                                }
+                                ${$shift->tod} = date('g', $end - strtotime(${$shift->tod.'b'}))+1;
+                            }
+                            $total = $morning + $afternoon + $evening;
+                        ?>
+                            <td>{{$morningb}}</td>
+                            <td>{{$morninge}}</td>
+                            <td>{{$afternoonb}}</td>
+                            <td>{{$afternoone}}</td>
+                            <td>{{$eveningb}}</td>
+                            <td>{{$eveninge}}</td>
+                            <td></td>
+                            <td>{{$total}}</td>
                     </tr>
                     <?php $counter++;?>
-                @endforeach
+                @endfor
                 {{-- prints week 1 total --}}
                 <tr>
                     @for($i = 0; $i < 8; $i ++)
@@ -50,16 +88,52 @@
                     </td>
                 </tr>
                 {{-- loops through second week --}}
-                @foreach(explode('|',$timesheet->secondweek) as $day)
+                @for($i = 7; $i < 14; $i ++)
             		<tr>
             			<td>{{date('l',strtotime($timesheet->startdate) + ($counter*$oneDay))}}</td>
                         <td>{{date('m/d/y',strtotime($timesheet->startdate) + ($counter*$oneDay))}}</td>
-                        @foreach(explode(',',$day) as $dayItem)
-                        	<td>{{$dayItem}}</td>
-                        @endforeach
+                        <?php
+                            $today = array();
+                            foreach($shifts as $shift){
+                                $date = explode(' ', $shift->start)[0];
+                                if($date == date('Y-m-d', strtotime($timesheet->startdate) + ($i*$oneDay))){
+                                    $today[] = $shift;
+                                }
+                            }
+                            $morningb = "";
+                            $morninge = "";
+                            $afternoonb = "";
+                            $afternoone = "";
+                            $eveningb = "";
+                            $eveninge = "";
+
+                            $morning = 0;
+                            $afternoon = 0;
+                            $evening = 0;
+                            foreach($today as $shift){
+                                ${$shift->tod.'b'} = date('g:i a', strtotime($shift->start));
+                                ${$shift->tod.'e'} = date('g:i a', strtotime($shift->end));
+                                if(${$shift->tod.'e'} < ${$shift->tod.'b'}){
+                                    $end = 24 + date('g',strtotime(${$shift->tod.'e'}));
+                                }
+                                else{
+                                    $end = date('g',strtotime(${$shift->tod.'e'}));
+                                }
+                                ${$shift->tod} = date('g', $end - strtotime(${$shift->tod.'b'}))+1;
+                            }
+                            $total = $morning + $afternoon + $evening;
+                        ?>
+                        	<td>{{$morningb}}</td>
+                            <td>{{$morninge}}</td>
+                            <td>{{$afternoonb}}</td>
+                            <td>{{$afternoone}}</td>
+                            <td>{{$eveningb}}</td>
+                            <td>{{$eveninge}}</td>
+                            <td></td>
+                            <td>{{$total}}</td>
                     </tr>
                     <?php $counter++;?>
-                @endforeach
+                @endfor
                 {{-- prints week 2 total --}}
                 <tr>
                     @for($i = 0; $i < 8; $i ++)
