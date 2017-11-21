@@ -51,16 +51,22 @@
                             $evening = 0;
 
                             foreach($today as $shift){
-
-                                ${$shift->tod.'b'} = date('g:i a', strtotime($shift->start));
-                                ${$shift->tod.'e'} = date('g:i a', strtotime($shift->end));
-                                if(${$shift->tod.'e'} < ${$shift->tod.'b'}){
-                                    $end = 24 + date('g',strtotime(${$shift->tod.'e'}));
+                                if($shift->start == $shift->end){
+                                    ${$shift->tod.'b'} = "";
+                                    ${$shift->tod.'e'} = "";
                                 }
                                 else{
-                                    $end = date('g',strtotime(${$shift->tod.'e'}));
+                                    ${$shift->tod.'b'} = date('g:i a', strtotime($shift->start));
+                                    ${$shift->tod.'e'} = date('g:i a', strtotime($shift->end));
+                                    if(${$shift->tod.'e'} < ${$shift->tod.'b'}){
+                                    $end = 24 + date('g',strtotime(${$shift->tod.'e'}));
+                                    }
+                                    else{
+                                        $end = date('g',strtotime(${$shift->tod.'e'}));
+                                    }
+                                    ${$shift->tod} = date('g', $end - strtotime(${$shift->tod.'b'}))+1;
                                 }
-                                ${$shift->tod} = date('g', $end - strtotime(${$shift->tod.'b'}))+1;
+                                
                             }
                             $total = $morning + $afternoon + $evening;
                         ?>

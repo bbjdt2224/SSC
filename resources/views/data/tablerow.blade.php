@@ -17,8 +17,16 @@
 {{-- table data cells that display morning afternoon and evening start and end times and a reason for absence --}}
 @foreach($inforow as $shift)
 	<?php
-		${$shift->tod."_start"} = $shift->start;
-		${$shift->tod."_end"} = $shift->end;
+
+		if($shift->start == $shift->end){
+			${$shift->tod."_start"} = "5:00 am";
+			${$shift->tod."_end"} = "5:00 am";
+		}
+		else{
+			${$shift->tod."_start"} = $shift->start;
+			${$shift->tod."_end"} = $shift->end;
+		}
+		
 		echo "<input type='hidden' name='".$counter.$shift->tod."' value='".$shift->id."' id='".$counter.$shift->tod."'>";
 	?>
 @endforeach

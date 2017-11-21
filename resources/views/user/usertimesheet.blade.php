@@ -75,12 +75,12 @@
                 {{-- loop goes through each day in the second week --}}
                 @for($i = 7; $i < 14; $i ++)
                     <tr>
-                        <td>{{date('l',strtotime($userInfo->startdate) + ($counter*$oneDay))}}</td>
-                        <td>{{date('m/d/y',strtotime($userInfo->startdate) + ($counter*$oneDay))}}</td>
+                        <td>{{date('l',strtotime($userInfo->startdate) + ($i*$oneDay))}}</td>
+                        <td>{{date('m/d/y',strtotime($userInfo->startdate) + ($i*$oneDay))}}</td>
                         <?php
                             $today = array();
-                            foreach($shifts as $shift->start){
-                                $date = explode(' ', $shift)[0];
+                            foreach($shifts as $shift){
+                                $date = explode(' ', $shift->start)[0];
                                 if($date == date('Y-m-d', strtotime($userInfo->startdate) + ($i*$oneDay))){
                                     $today[] = $shift;
                                 }

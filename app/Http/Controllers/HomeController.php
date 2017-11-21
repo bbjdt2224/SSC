@@ -62,8 +62,8 @@ class HomeController extends Controller
                     $today = date('Y-m-d', strtotime(date('Y')."W".$date.($i+1)));
                 }
                 else{
-                    $date = $date+1;
-                    $today = date('Y-m-d', strtotime(date('Y')."W".$date.(($i%7)+1)));
+                    $tdate = $date+1;
+                    $today = date('Y-m-d', strtotime(date('Y')."W".$tdate.(($i%7)+1)));
                 }
                 $start = $today." ".date('H:i:s', strtotime(request($i.'morningbegin')));
                 $end = $today." ".date('H:i:s', strtotime(request($i.'morningend')));
@@ -74,8 +74,8 @@ class HomeController extends Controller
                     $today = date('Y-m-d', strtotime(date('Y')."W".$date.($i+1)));
                 }
                 else{
-                    $date = $date+1;
-                    $today = date('Y-m-d', strtotime(date('Y')."W".$date.(($i%7)+1)));
+                    $tdate = $date+1;
+                    $today = date('Y-m-d', strtotime(date('Y')."W".$tdate.(($i%7)+1)));
                 }
                 $start = $today." ".date('H:i:s', strtotime(request($i.'morningbegin')));
                 $end = $today." ".date('H:i:s', strtotime(request($i.'morningend')));
@@ -91,8 +91,8 @@ class HomeController extends Controller
                     $today = date('Y-m-d', strtotime(date('Y')."W".$date.($i+1)));
                 }
                 else{
-                    $date = $date+1;
-                    $today = date('Y-m-d', strtotime(date('Y')."W".$date.(($i%7)+1)));
+                    $tdate = $date+1;
+                    $today = date('Y-m-d', strtotime(date('Y')."W".$tdate.(($i%7)+1)));
                 }
                 $start = $today." ".date('H:i:s', strtotime(request($i.'afternoonbegin')));
                 $end = $today." ".date('H:i:s', strtotime(request($i.'afternoonend')));
@@ -103,8 +103,8 @@ class HomeController extends Controller
                     $today = date('Y-m-d', strtotime(date('Y')."W".$date.($i+1)));
                 }
                 else{
-                    $date = $date+1;
-                    $today = date('Y-m-d', strtotime(date('Y')."W".$date.(($i%7)+1)));
+                    $tdate = $date+1;
+                    $today = date('Y-m-d', strtotime(date('Y')."W".$tdate.(($i%7)+1)));
                 }
                 $start = $today." ".date('H:i:s', strtotime(request($i.'afternoonbegin')));
                 $end = $today." ".date('H:i:s', strtotime(request($i.'afternoonend')));
@@ -120,9 +120,10 @@ class HomeController extends Controller
                     $today = date('Y-m-d', strtotime(date('Y')."W".$date.($i+1)));
                 }
                 else{
-                    $date = $date+1;
-                    $today = date('Y-m-d', strtotime(date('Y')."W".$date.(($i%7)+1)));
+                    $tdate = $date+1;
+                    $today = date('Y-m-d', strtotime(date('Y')."W".$tdate.(($i%7)+1)));
                 }
+
                 $start = $today." ".date('H:i:s', strtotime(request($i.'eveningbegin')));
                 $end = $today." ".date('H:i:s', strtotime(request($i.'eveningend')));
                 Shifts::find(request($i.'evening'))->update(['start'=> $start, 'end' => $end, 'timesheet'=> request('id'), 'tod' => 'evening']);
@@ -132,8 +133,8 @@ class HomeController extends Controller
                     $today = date('Y-m-d', strtotime(date('Y')."W".$date.($i+1)));
                 }
                 else{
-                    $date = $date+1;
-                    $today = date('Y-m-d', strtotime(date('Y')."W".$date.(($i%7)+1)));
+                    $tdate = $date+1;
+                    $today = date('Y-m-d', strtotime(date('Y')."W".$tdate.(($i%7)+1)));
                 }
                 $start = $today." ".date('H:i:s', strtotime(request($i.'eveningbegin')));
                 $end = $today." ".date('H:i:s', strtotime(request($i.'eveningend')));
@@ -144,6 +145,10 @@ class HomeController extends Controller
                     'tod' => 'evening',
                 ]);
             }
+        }
+        $date = date('W', strtotime(request('startdate')));
+        if($date%2 != 1){
+            $date = $date -1;
         }
         $date = date('Y-m-d', strtotime(date('Y')."W".$date."1"));
         if(Timesheets::where('user_id', '=', Auth::id())->where('startdate', '=', $date)->first() == null){
