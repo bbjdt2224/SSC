@@ -48,9 +48,9 @@
 <td>
 	@include('data.select', [$times = $eveningTimes, $info = $evening_end, $name = $counter.'eveningend'])
 </td>
-<td>
+<!--<td>
 	<textarea class="form-control" name="{{$counter}}reason"></textarea>
-</td>
+</td>-->
 <td id="{{$counter}}total">
 	0
 </td>

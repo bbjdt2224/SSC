@@ -15,10 +15,12 @@ use Faker\Generator as Faker;
 
 $factory->define(App\User::class, function (Faker $faker) {
     static $password;
+    $username = str_random(7);
 
     return [
         'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
+        'username' => $username,
+        'email' => $username."@wmich.edu",
         'password' => $password ?: $password = bcrypt('password'),
         'fundcc' => str_random(5),
         'jobcode' => str_random(5),

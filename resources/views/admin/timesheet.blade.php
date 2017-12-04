@@ -18,7 +18,7 @@
                 <th>Afternoon End</th>
                 <th>Evening Begin</th>
                 <th>Evening End</th>
-                <th>Reason for Absence</th>
+                <!--<th>Reason for Absence</th>-->
                 <th>Total</th>
             </thead>
             <tbody>
@@ -76,7 +76,7 @@
                             <td>{{$afternoone}}</td>
                             <td>{{$eveningb}}</td>
                             <td>{{$eveninge}}</td>
-                            <td></td>
+                            <!--<td></td>-->
                             <td>{{$total}}</td>
                     </tr>
                     <?php $counter++;?>

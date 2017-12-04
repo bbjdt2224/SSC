@@ -29,7 +29,7 @@
                 <th>Afternoon End</th>
                 <th>Evening Begin</th>
                 <th>Evening End</th>
-                <th>Reason for Absence</th>
+                <!--<th>Reason for Absence</th>-->
                 <th>Total</th>
             </thead>
             <tbody>
@@ -61,7 +61,7 @@
                 @endfor
                 {{-- print total for week 1 --}}
                 <tr>
-                    @for($i = 0; $i < 8; $i ++)
+                    @for($i = 0; $i < 7; $i ++)
                         <td></td>
                     @endfor
                     <td>
@@ -91,7 +91,7 @@
                 @endfor
                 {{-- print total for week 2 --}}
                  <tr>
-                    @for($i = 0; $i < 8; $i ++)
+                    @for($i = 0; $i < 7; $i ++)
                         <td></td>
                     @endfor
                     <td>
@@ -104,7 +104,7 @@
                 </tr>
                 {{-- print overall total --}}
                  <tr>
-                    @for($i = 0; $i < 8; $i ++)
+                    @for($i = 0; $i < 7; $i ++)
                         <td></td>
                     @endfor
                     <td>

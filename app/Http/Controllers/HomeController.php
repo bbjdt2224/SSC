@@ -205,7 +205,6 @@ class HomeController extends Controller
     public function saveSignature()
     {
         Timesheets::where('startdate', '=', request('date'))->where('user_id', '=', Auth::id())->update(['signature' => request('signature')]);
-
         return redirect('home');
     }
 }
