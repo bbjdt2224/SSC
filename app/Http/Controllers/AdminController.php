@@ -24,7 +24,7 @@ class AdminController extends Controller
     	$usersInfo = array();
     	$allUsers = User::all()->where('admin', '=', '0');
     	foreach($allUsers as $user){
-            $timesheet = Timesheets::where('user_id', '=', $user->id)->orderBy('startdate', 'desc')->first();
+            $timesheet = Timesheets::where('user_id', '=', $user->id)->whereBetween('startdate', [date('Y-m-d', strtotime('-13 day', time())),date('Y-m-d', time())])->first();
             $usersInfo[] = array($user, $timesheet);
     	}
     	return view('admin.admin', compact('usersInfo'));
