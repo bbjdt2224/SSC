@@ -83,7 +83,7 @@
                 @endfor
                 {{-- prints week 1 total --}}
                 <tr>
-                    @for($i = 0; $i < 8; $i ++)
+                    @for($i = 0; $i < 7; $i ++)
                         <td></td>
                     @endfor
                     <td>
@@ -135,14 +135,14 @@
                             <td>{{$afternoone}}</td>
                             <td>{{$eveningb}}</td>
                             <td>{{$eveninge}}</td>
-                            <td></td>
+                            <!--<td></td>-->
                             <td>{{$total}}</td>
                     </tr>
                     <?php $counter++;?>
                 @endfor
                 {{-- prints week 2 total --}}
                 <tr>
-                    @for($i = 0; $i < 8; $i ++)
+                    @for($i = 0; $i < 7; $i ++)
                         <td></td>
                     @endfor
                     <td>
@@ -154,7 +154,7 @@
                 </tr>
                 {{-- prints overall total --}}
                 <tr>
-                    @for($i = 0; $i < 8; $i ++)
+                    @for($i = 0; $i < 7; $i ++)
                         <td></td>
                     @endfor
                     <td>

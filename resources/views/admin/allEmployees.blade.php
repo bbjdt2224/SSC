@@ -18,7 +18,7 @@
 							<tr>
 								<td>
 									{{-- name --}}
-									{{$user->name}}
+									<input type="text" name="name[]" class="form-control" value="{{$user->name}}">
 									<input type="hidden" name="id[]" value="{{$user->id}}">
 								</td>
 								<td>
