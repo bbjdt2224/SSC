@@ -99,7 +99,7 @@ class AdminController extends Controller
 
     // allows a user to edit a submitted timesheet
     public function allowEdit($id, $date){
-        Timesheets::where('user', '=', $id)->where('startdate', '=', $date)->update(['submitted' => 0]);
+        Timesheets::where('user_id', '=', $id)->where('startdate', '=', $date)->update(['submitted' => 0]);
         return redirect(route('admin'));
     }
 
