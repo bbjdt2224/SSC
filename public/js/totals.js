@@ -55,13 +55,13 @@ function updateTotal() {
 	var temp = 0;
 
 	for (var i = 0; i < 7; i++) {
-		if (!isNaN(temp = parseInt($('#' + i + 'total').text()))) {
+		if (!isNaN(temp = parseFloat($('#' + i + 'total').text()))) {
 			week1total += temp;
 		}
 	}
 
 	for (var i = 7; i < 14; i++) {
-		if (!isNaN(temp = parseInt($('#' + i + 'total').text()))) {
+		if (!isNaN(temp = parseFloat($('#' + i + 'total').text()))) {
 			week2total += temp;
 		}
 	}

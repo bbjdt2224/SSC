@@ -22,6 +22,7 @@ $factory->define(App\User::class, function (Faker $faker) {
         'username' => $username,
         'email' => $username."@wmich.edu",
         'password' => $password ?: $password = bcrypt('password'),
+        'group' => $faker->randomElement($array = array ('1','2')),
         'fundcc' => str_random(5),
         'jobcode' => str_random(5),
         'admin' => $faker->randomElement($array = array ('0','1')),

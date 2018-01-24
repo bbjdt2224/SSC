@@ -44,3 +44,19 @@ Route::get('/allowEdit/{id}/{date}', 'AdminController@allowEdit')->name('allowEd
 Route::get('/editEmployees', 'AdminController@allEmployees')->name('edit');
 
 Route::post('/updateEmployees', 'AdminController@update')->name('update');
+
+Route::post('/group', 'AdminController@group')->name('group');
+
+Route::get('/email', 'AdminController@email')->name('email');
+
+Route::post('/sendEmail', 'AdminController@sendEmail')->name('sendemail');
+
+Route::post('/changeclasses', 'SurveyController@changeclasses')->name('changeclasses');
+
+Route::get('/survey', 'SurveyController@index')->name('survey');
+
+Route::post('/submitsurvey', 'SurveyController@submit')->name('submitsurvey');
+
+Route::get('/insertClass', 'ClassesController@insertClass')->name('insertClass');
+
+Route::post('/addClass', 'ClassesController@add')->name('addClass');

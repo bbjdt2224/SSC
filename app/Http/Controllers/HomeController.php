@@ -63,10 +63,13 @@ class HomeController extends Controller
                 }
                 else{
                     $tdate = $date+1;
-                    $today = date('Y-m-d', strtotime(date('Y')."W".$tdate.(($i%7)+1)));
+                    $today = date('Y-m-d', strtotime(date('Y')."W".sprintf("%02d", $tdate).(($i%7)+1)));
                 }
                 $start = $today." ".date('H:i:s', strtotime(request($i.'morningbegin')));
                 $end = $today." ".date('H:i:s', strtotime(request($i.'morningend')));
+                if($i == 8){
+                    dd($start);
+                }
                 Shifts::find(request($i.'morning'))->update(['start'=> $start, 'end' => $end, 'timesheet'=> request('id'), 'tod' => 'morning']);
             }
             elseif(request($i.'morningbegin') != "-" && request($i.'morningend') != "-"){
@@ -75,7 +78,7 @@ class HomeController extends Controller
                 }
                 else{
                     $tdate = $date+1;
-                    $today = date('Y-m-d', strtotime(date('Y')."W".$tdate.(($i%7)+1)));
+                    $today = date('Y-m-d', strtotime(date('Y')."W".sprintf("%02d", $tdate).(($i%7)+1)));
                 }
                 $start = $today." ".date('H:i:s', strtotime(request($i.'morningbegin')));
                 $end = $today." ".date('H:i:s', strtotime(request($i.'morningend')));
@@ -92,7 +95,7 @@ class HomeController extends Controller
                 }
                 else{
                     $tdate = $date+1;
-                    $today = date('Y-m-d', strtotime(date('Y')."W".$tdate.(($i%7)+1)));
+                    $today = date('Y-m-d', strtotime(date('Y')."W".sprintf("%02d", $tdate).(($i%7)+1)));
                 }
                 $start = $today." ".date('H:i:s', strtotime(request($i.'afternoonbegin')));
                 $end = $today." ".date('H:i:s', strtotime(request($i.'afternoonend')));
@@ -104,7 +107,7 @@ class HomeController extends Controller
                 }
                 else{
                     $tdate = $date+1;
-                    $today = date('Y-m-d', strtotime(date('Y')."W".$tdate.(($i%7)+1)));
+                    $today = date('Y-m-d', strtotime(date('Y')."W".sprintf("%02d", $tdate).(($i%7)+1)));
                 }
                 $start = $today." ".date('H:i:s', strtotime(request($i.'afternoonbegin')));
                 $end = $today." ".date('H:i:s', strtotime(request($i.'afternoonend')));
@@ -121,7 +124,7 @@ class HomeController extends Controller
                 }
                 else{
                     $tdate = $date+1;
-                    $today = date('Y-m-d', strtotime(date('Y')."W".$tdate.(($i%7)+1)));
+                    $today = date('Y-m-d', strtotime(date('Y')."W".sprintf("%02d", $tdate).(($i%7)+1)));
                 }
 
                 $start = $today." ".date('H:i:s', strtotime(request($i.'eveningbegin')));
@@ -134,7 +137,7 @@ class HomeController extends Controller
                 }
                 else{
                     $tdate = $date+1;
-                    $today = date('Y-m-d', strtotime(date('Y')."W".$tdate.(($i%7)+1)));
+                    $today = date('Y-m-d', strtotime(date('Y')."W".sprintf("%02d", $tdate).(($i%7)+1)));
                 }
                 $start = $today." ".date('H:i:s', strtotime(request($i.'eveningbegin')));
                 $end = $today." ".date('H:i:s', strtotime(request($i.'eveningend')));
@@ -190,7 +193,7 @@ class HomeController extends Controller
         if($date%2 != 1){
             $date = $date -1;
         }
-        $date = date('Y-m-d', strtotime(date('Y')."W".$date."1"));
+        $date = date('Y-m-d', strtotime(date('Y')."W".sprintf("%02d", $date)."1"));
         if(Timesheets::where('startdate', '=', $date)->where('user_id', '=', Auth::id())->count() == 0){
             $userInfo = new Timesheets;
             $userInfo->user_id = Auth::id();

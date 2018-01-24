@@ -5,6 +5,17 @@
  --}}
 @section('content')
 	<div class="container">
+		<form method="post" action="{{route("group")}}">
+			{{ csrf_field()}}
+			Group:
+			<select name="group" class="form-control">
+				<option>All</option>
+				<option>1</option>
+				<option>2</option>
+				<option>3</option>
+			</select>
+			<button class="btn btn-primary">Filter</button>
+		</form>
 		<table class="table">
 			<thead>
 				<th>Name</th>

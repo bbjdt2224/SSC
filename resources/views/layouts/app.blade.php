@@ -51,6 +51,7 @@
                         @guest
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
+                            <li><a href="{{ route('survey') }}">End of the Night Survey</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -70,6 +71,9 @@
                                         </li>
                                         <li>
                                             <a href={{route('prevusers')}}>Past Employees</a>
+                                        </li>
+                                        <li>
+                                            <a href={{route('email')}}>Email</a>
                                         </li>
                                     @endif
                                     <li>
