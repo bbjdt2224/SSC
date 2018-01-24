@@ -58,13 +58,13 @@
                                 else{
                                     ${$shift->tod.'b'} = date('g:i a', strtotime($shift->start));
                                     ${$shift->tod.'e'} = date('g:i a', strtotime($shift->end));
-                                    if(${$shift->tod.'e'} < ${$shift->tod.'b'}){
-                                    $end = 24 + date('g',strtotime(${$shift->tod.'e'}));
+                                    if(date('G',strtotime(${$shift->tod.'e'})) < date('G',strtotime(${$shift->tod.'b'}))){
+                                        $end = 24 + date('G',strtotime(${$shift->tod.'e'}));
                                     }
                                     else{
-                                        $end = date('g',strtotime(${$shift->tod.'e'}));
+                                        $end = date('G',strtotime(${$shift->tod.'e'}));
                                     }
-                                    ${$shift->tod} = date('g', $end - strtotime(${$shift->tod.'b'}))+1;
+                                    ${$shift->tod} = $end - date('G',strtotime(${$shift->tod.'b'}));
                                 }
                                 
                             }
@@ -119,13 +119,13 @@
                             foreach($today as $shift){
                                 ${$shift->tod.'b'} = date('g:i a', strtotime($shift->start));
                                 ${$shift->tod.'e'} = date('g:i a', strtotime($shift->end));
-                                if(${$shift->tod.'e'} < ${$shift->tod.'b'}){
-                                    $end = 24 + date('g',strtotime(${$shift->tod.'e'}));
-                                }
-                                else{
-                                    $end = date('g',strtotime(${$shift->tod.'e'}));
-                                }
-                                ${$shift->tod} = date('g', $end - strtotime(${$shift->tod.'b'}))+1;
+                                if(date('G',strtotime(${$shift->tod.'e'})) < date('G',strtotime(${$shift->tod.'b'}))){
+                                        $end = 24 + date('G',strtotime(${$shift->tod.'e'}));
+                                    }
+                                    else{
+                                        $end = date('G',strtotime(${$shift->tod.'e'}));
+                                    }
+                                    ${$shift->tod} = $end - date('G',strtotime(${$shift->tod.'b'}));
                             }
                             $total = $morning + $afternoon + $evening;
                         ?>
