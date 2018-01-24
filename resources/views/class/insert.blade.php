@@ -1,5 +1,5 @@
 @extends('layouts.app')
-{{-- end of the night survey --}}
+{{-- adds a new class to the survey --}}
 @section('content')
 	<div class="container">
 		<form action="{{route('addClass')}}" method="post">
@@ -16,6 +16,7 @@
 			</select>
 			Course Title:
 			<input type="text" name="class" class="form-control">
+			<br>
 			<button type="submit" class="btn btn-primary">Add</button>
 		</form>
 	</div>

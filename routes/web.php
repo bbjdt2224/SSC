@@ -60,3 +60,9 @@ Route::post('/submitsurvey', 'SurveyController@submit')->name('submitsurvey');
 Route::get('/insertClass', 'ClassesController@insertClass')->name('insertClass');
 
 Route::post('/addClass', 'ClassesController@add')->name('addClass');
+
+Route::get('/edit', 'ClassesController@editClasses')->name('editClass');
+
+Route::post('/editClasses', 'ClassesController@edit')->name('edit');
+
+Route::get('/deleteClass/{id}', 'ClassesController@delete')->name('delete');

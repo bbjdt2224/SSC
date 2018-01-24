@@ -7,14 +7,22 @@
 	<div class="container">
 		<form method="post" action="{{route("group")}}">
 			{{ csrf_field()}}
-			Group:
-			<select name="group" class="form-control">
-				<option>All</option>
-				<option>1</option>
-				<option>2</option>
-				<option>3</option>
-			</select>
-			<button class="btn btn-primary">Filter</button>
+			<div class="row">
+				<div class="col-md-1">
+					Group:
+				</div>
+				<div class="col-md-4">
+					<select name="group" class="form-control">
+						<option>All</option>
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+					</select>
+				</div>
+				<div class="col-md-2">
+					<button class="btn btn-primary">Filter</button>
+				</div>
+			</div>
 		</form>
 		<table class="table">
 			<thead>

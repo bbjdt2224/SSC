@@ -27,10 +27,19 @@ class ClassesController extends Controller
     }
 
     public function editClasses(){
-
+        $classes = Classes::all();
+        return view('class.editClasses', compact('classes'));
     }
 
     public function edit(){
+        foreach(request('id') as $id){
+            Classes::find($id)->update(['catagory'=>request('catagory'.$id), 'class'=>request('class'.$id)]);
+        }
+        return redirect(route('admin'));
+    }
 
+    public function delete($id){
+        Classes::find($id)->delete();
+        return redirect(route('editClass'));
     }
 }
