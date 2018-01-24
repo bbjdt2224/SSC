@@ -2,7 +2,7 @@
 {{-- edit classes on the survey --}}
 @section('content')
 	<div class="container">
-		<form action="{{route('edit')}}" method="post">
+		<form action="{{route('editClasses')}}" method="post">
 			{{ csrf_field()}}
 			<?php $catagories = array("Math","Mechanical","Aerospace", "Chemical", "Industrial", "Electrical", "Computer Science");?>
 			<table class="table">
