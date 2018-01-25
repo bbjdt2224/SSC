@@ -67,9 +67,7 @@ class HomeController extends Controller
                 }
                 $start = $today." ".date('H:i:s', strtotime(request($i.'morningbegin')));
                 $end = $today." ".date('H:i:s', strtotime(request($i.'morningend')));
-                if($i == 8){
-                    dd($start);
-                }
+                
                 Shifts::find(request($i.'morning'))->update(['start'=> $start, 'end' => $end, 'timesheet'=> request('id'), 'tod' => 'morning']);
             }
             elseif(request($i.'morningbegin') != "-" && request($i.'morningend') != "-"){
