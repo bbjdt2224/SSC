@@ -112,8 +112,7 @@ class AdminController extends Controller
     //updates all employee data in database
     public function update(){
         for($i = 0; $i < count(request('id')); $i ++){
-            User::where('id', '=', request('id')[$i])->update(['name'=> request('name')[$i], 'fundcc'=>request('fundcc')[$i],'jobcode'=>request('jobcode')[$i],'admin'=>request('admin')[$i],'hours'=>request('hours')[$i]]);
-            //User::where('id', '=', request('id')[$i])->update(['name'=> request('name')[$i], 'fundcc'=>request('fundcc')[$i],'jobcode'=>request('jobcode')[$i],'admin'=>request('admin')[$i],'hours'=>request('hours')[$i], 'group'=> request('group')[$i]]);
+            User::where('id', '=', request('id')[$i])->update(['name'=> request('name')[$i], 'fundcc'=>request('fundcc')[$i],'jobcode'=>request('jobcode')[$i],'admin'=>request('admin')[$i],'hours'=>request('hours')[$i], 'group'=> request('group')[$i]]);
         }
         return redirect(route('admin'));
     }
