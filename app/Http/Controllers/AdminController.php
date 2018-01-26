@@ -168,7 +168,7 @@ class AdminController extends Controller
             }
         }
         foreach($users as $u){
-            $emails .= $u->email.";";
+            $emails .= $u->email.",";
         }
         mail($emails, $subject, $message, $from);
 
