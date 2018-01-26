@@ -141,7 +141,7 @@ class AdminController extends Controller
     public function sendEmail(){
         $subject = request('subject');
         $message = request('message');
-        $from = "From:timesheetwebsite@wmich.edu";
+        $from = "From: timesheetwebsite@wmich.edu";
         $users = "";
         $emails = "";
         if(request('group') == "All"){
