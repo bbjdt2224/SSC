@@ -5,10 +5,14 @@
 		td{
 			font-size: 6pt;
 		}
+        .large{
+            font-size: 10pt;
+            font-weight: bold;
+        }
 	</style>
 	<div class="container-fluid">
 		<h3>{{$user->name."  |  Fund & Cost Center: ". $user->fundcc."  |  Job Code: ".$user->jobcode}}</h3>
-		<table class='table'>
+		<table class='table table-condensed'>
 			<thead>
 				<th>Day</th>
                 <th>Date</th>
@@ -60,24 +64,28 @@
                                     ${$shift->tod.'e'} = date('g:i a', strtotime($shift->end));
                                     if(date('G',strtotime(${$shift->tod.'e'})) < date('G',strtotime(${$shift->tod.'b'}))){
                                         $end = 24 + date('G',strtotime(${$shift->tod.'e'}));
+                                        $min = (date('i', strtotime(${$shift->tod.'e'}))/60);
+                                        $end += $min;
                                     }
                                     else{
                                         $end = date('G',strtotime(${$shift->tod.'e'}));
+                                        $min = (date('i', strtotime(${$shift->tod.'e'}))/60);
+                                        $end += $min;
                                     }
-                                    ${$shift->tod} = $end - date('G',strtotime(${$shift->tod.'b'}));
+                                    ${$shift->tod} = $end - (date('G',strtotime(${$shift->tod.'b'}))+(date('i', strtotime(${$shift->tod.'b'}))/60));
                                 }
                                 
                             }
                             $total = $morning + $afternoon + $evening;
                         ?>
-                            <td>{{$morningb}}</td>
-                            <td>{{$morninge}}</td>
-                            <td>{{$afternoonb}}</td>
-                            <td>{{$afternoone}}</td>
-                            <td>{{$eveningb}}</td>
-                            <td>{{$eveninge}}</td>
+                            <td class="large">{{$morningb}}</td>
+                            <td class="large">{{$morninge}}</td>
+                            <td class="large">{{$afternoonb}}</td>
+                            <td class="large">{{$afternoone}}</td>
+                            <td class="large">{{$eveningb}}</td>
+                            <td class="large">{{$eveninge}}</td>
                             <!--<td></td>-->
-                            <td>{{$total}}</td>
+                            <td class="large">{{$total}}</td>
                     </tr>
                     <?php $counter++;?>
                 @endfor
@@ -89,7 +97,7 @@
                     <td>
                         Week 1 Total:
                     </td>
-                    <td>
+                    <td class="large">
                         {{$totals[0]}}
                     </td>
                 </tr>
@@ -121,22 +129,26 @@
                                 ${$shift->tod.'e'} = date('g:i a', strtotime($shift->end));
                                 if(date('G',strtotime(${$shift->tod.'e'})) < date('G',strtotime(${$shift->tod.'b'}))){
                                         $end = 24 + date('G',strtotime(${$shift->tod.'e'}));
+                                        $min = (date('i', strtotime(${$shift->tod.'e'}))/60);
+                                        $end += $min;
                                     }
                                     else{
                                         $end = date('G',strtotime(${$shift->tod.'e'}));
+                                        $min = (date('i', strtotime(${$shift->tod.'e'}))/60);
+                                        $end += $min;
                                     }
-                                    ${$shift->tod} = $end - date('G',strtotime(${$shift->tod.'b'}));
+                                    ${$shift->tod} = $end - (date('G',strtotime(${$shift->tod.'b'}))+(date('i', strtotime(${$shift->tod.'b'}))/60));
                             }
                             $total = $morning + $afternoon + $evening;
                         ?>
-                        	<td>{{$morningb}}</td>
-                            <td>{{$morninge}}</td>
-                            <td>{{$afternoonb}}</td>
-                            <td>{{$afternoone}}</td>
-                            <td>{{$eveningb}}</td>
-                            <td>{{$eveninge}}</td>
+                        	<td class="large">{{$morningb}}</td>
+                            <td class="large">{{$morninge}}</td>
+                            <td class="large">{{$afternoonb}}</td>
+                            <td class="large">{{$afternoone}}</td>
+                            <td class="large">{{$eveningb}}</td>
+                            <td class="large">{{$eveninge}}</td>
                             <!--<td></td>-->
-                            <td>{{$total}}</td>
+                            <td class="large">{{$total}}</td>
                     </tr>
                     <?php $counter++;?>
                 @endfor
@@ -148,7 +160,7 @@
                     <td>
                         Week 2 Total:
                     </td>
-                    <td>
+                    <td class="large">
                         {{$totals[1]}}
                     </td>
                 </tr>
@@ -160,7 +172,7 @@
                     <td>
                         Total:
                     </td>
-                    <td>
+                    <td class="large">
                         {{$totals[2]}}
                     </td>
                 </tr>
